@@ -1,7 +1,5 @@
-package com.kpfu.itis.android_inception_23
+package com.itis.delivery
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
 
-@HiltAndroidApp
-class InceptionApp : Application()
+class DeliveryApp : Application()
