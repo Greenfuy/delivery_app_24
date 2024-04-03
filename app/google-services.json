@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "210905235471",
+    "project_id": "delivery-423d7",
+    "storage_bucket": "delivery-423d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210905235471:android:a489b9b1b9bfbb7a38a37a",
+        "android_client_info": {
+          "package_name": "com.itis.delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCRVEWbh46TXG7n57ngc9OPCUreopIwX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
