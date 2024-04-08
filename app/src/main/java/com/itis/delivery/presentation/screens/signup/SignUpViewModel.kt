@@ -7,7 +7,6 @@ import com.itis.delivery.domain.usecase.signup.SignUpUseCase
 import com.itis.delivery.domain.usecase.validation.EmailValidateUseCase
 import com.itis.delivery.domain.usecase.validation.UsernameValidateUseCase
 import com.itis.delivery.domain.usecase.validation.PasswordValidateUseCase
-import com.itis.delivery.domain.usecase.validation.PasswordsMatchUseCase
 import com.itis.delivery.presentation.base.BaseViewModel
 import com.itis.delivery.utils.AuthErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +20,7 @@ class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val emailValidateUseCase: EmailValidateUseCase,
     private val usernameValidateUseCase: UsernameValidateUseCase,
-    private val passwordValidateUseCase: PasswordValidateUseCase,
-    private val passwordsMatchUseCase: PasswordsMatchUseCase
+    private val passwordValidateUseCase: PasswordValidateUseCase
 ) : BaseViewModel() {
 
     private val _signingUp = MutableStateFlow(false)
@@ -56,7 +54,7 @@ class SignUpViewModel @Inject constructor(
         return usernameValidateUseCase.invoke(username)
                 && emailValidateUseCase.invoke(email)
                 && passwordValidateUseCase.invoke(password)
-                && passwordsMatchUseCase.invoke(password, confirmPassword)
+                && password == confirmPassword
     }
 
     private fun signUp(username: String, email: String, password: String) {

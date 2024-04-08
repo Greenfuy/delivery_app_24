@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
@@ -43,10 +43,6 @@ android {
 
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 
 dependencies {
 
@@ -62,7 +58,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
 
@@ -71,13 +67,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     // Hilt Dagger
-    val daggerVersion = "2.49"
+    val daggerVersion = "2.51.1"
     implementation("com.google.dagger:hilt-android:$daggerVersion")
-    "kapt"("com.google.dagger:hilt-compiler:$daggerVersion")
+    "ksp"("com.google.dagger:hilt-compiler:$daggerVersion")
 
     // ViewBinding
     val viewBindingDelegateVersion = "1.5.9"
