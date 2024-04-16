@@ -9,6 +9,8 @@ import com.itis.delivery.domain.usecase.validation.UsernameValidateUseCase
 import com.itis.delivery.domain.usecase.validation.PasswordValidateUseCase
 import com.itis.delivery.presentation.base.BaseViewModel
 import com.itis.delivery.utils.AuthErrors
+import com.itis.delivery.utils.ExceptionHandlerDelegate
+import com.itis.delivery.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +22,8 @@ class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val emailValidateUseCase: EmailValidateUseCase,
     private val usernameValidateUseCase: UsernameValidateUseCase,
-    private val passwordValidateUseCase: PasswordValidateUseCase
+    private val passwordValidateUseCase: PasswordValidateUseCase,
+    private val exceptionHandlerDelegate: ExceptionHandlerDelegate
 ) : BaseViewModel() {
 
     private val _signingUp = MutableStateFlow(false)
@@ -60,8 +63,9 @@ class SignUpViewModel @Inject constructor(
     private fun signUp(username: String, email: String, password: String) {
         viewModelScope.launch {
             _signingUp.value = true
-            val result = signUpUseCase.invoke(username, email, password)
-            result.onFailure {
+            runSuspendCatching(exceptionHandlerDelegate) {
+                signUpUseCase.invoke(username, email, password)
+            }.onFailure {
                 if (it is FirebaseAuthUserCollisionException) {
                     Log.e("SignUpViewModel", "User already exists", it)
                     _error.value = AuthErrors.USER_ALREADY_EXISTS

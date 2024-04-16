@@ -72,7 +72,7 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
             success.observe {
                 if (it) {
-                    //TODO navigate to main
+                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                 }
             }
         }
