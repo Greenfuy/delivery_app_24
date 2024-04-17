@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.itis.delivery.domain.usecase.signin.SignInUseCase
 import com.itis.delivery.presentation.base.BaseViewModel
 import com.itis.delivery.utils.AuthErrors
+import com.itis.delivery.utils.ExceptionHandlerDelegate
+import com.itis.delivery.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase
+    private val signInUseCase: SignInUseCase,
+    private val exceptionHandlerDelegate: ExceptionHandlerDelegate
 ) : BaseViewModel() {
 
     private val _signingIn = MutableStateFlow(false)
@@ -37,8 +40,9 @@ class SignInViewModel @Inject constructor(
     private fun signIn(email: String, password: String) {
         viewModelScope.launch {
             _signingIn.value = true
-            val result = signInUseCase.invoke(email, password)
-            result.onFailure {
+            runSuspendCatching(exceptionHandlerDelegate) {
+                signInUseCase.invoke(email, password)
+            }.onFailure {
                 if (it is FirebaseAuthInvalidCredentialsException) {
                     Log.e("SignInViewModel", "Invalid credentials", it)
                     _error.value = AuthErrors.INVALID_CREDENTIALS

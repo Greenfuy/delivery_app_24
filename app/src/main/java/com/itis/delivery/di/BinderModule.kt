@@ -1,6 +1,10 @@
 package com.itis.delivery.di
 
-import com.itis.delivery.data.repository.FirebaseUserRepository
+import com.itis.delivery.data.repository.CategoryRepositoryImpl
+import com.itis.delivery.data.repository.ProductRepositoryImpl
+import com.itis.delivery.data.repository.UserRepositoryImpl
+import com.itis.delivery.domain.repository.CategoryRepository
+import com.itis.delivery.domain.repository.ProductRepository
 import com.itis.delivery.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -14,6 +18,14 @@ interface BinderModule {
 
     @Binds
     @Singleton
-    fun bindUserRepositoryImpl(userRepositoryImpl: FirebaseUserRepository): UserRepository
+    fun bindUserRepositoryImpl(userRepositoryImpl: UserRepositoryImpl): UserRepository
 
+
+    @Binds
+    @Singleton
+    fun bindProductRepositoryImpl(productRepositoryImpl: ProductRepositoryImpl): ProductRepository
+
+    @Binds
+    @Singleton
+    fun bindCategoryRepositoryImpl(categoryRepositoryImpl: CategoryRepositoryImpl) : CategoryRepository
 }

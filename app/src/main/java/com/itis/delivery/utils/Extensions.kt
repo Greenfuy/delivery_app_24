@@ -1,6 +1,5 @@
 package com.itis.delivery.utils
 
-import android.widget.EditText
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -21,12 +20,15 @@ inline fun <T> Flow<T>.observe(
     }
 }
 
-inline fun <R> runSuspendCatching(block: () -> R): Result<R> {
+inline fun <R> runSuspendCatching(
+    exceptionHandlerDelegate: ExceptionHandlerDelegate,
+    block: () -> R
+): Result<R> {
     return try {
         Result.success(block())
     } catch (c: CancellationException) {
         throw c
     } catch (e: Throwable) {
-        Result.failure(e)
+        Result.failure(exceptionHandlerDelegate.handleException(e))
     }
 }

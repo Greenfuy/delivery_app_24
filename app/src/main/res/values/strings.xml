@@ -26,4 +26,11 @@
     <string name="prompt_password_requirements">Password must contain at least 8 characters, 1 digit, 1 lowercase and 1 uppercase letter</string>
     <string name="prompt_confirm_password_requirements">Passwords do not match</string>
     <string name="mainfragment">MainFragment</string>
+    <string name="too_many_requests">Too many requests\n\n</string>
+    <string name="prompt_search">Search for products</string>
+    <string name="prompt_product_name_example">Tropicana Orange Juice 1 L</string>
+    <string name="prompt_add_to_cart">Add to cart</string>
+    <string name="prompt_category_example">Non alcoholic beverages</string>
+    <string name="prompt_error_main">Something went wrong :(</string>
+    <string name="unknown_error">Unknown error</string>
 </resources>
