@@ -11,12 +11,12 @@ import javax.inject.Singleton
 class UserDomainModelMapper @Inject constructor() {
 
     fun firebaseUserToUserModel(input: FirebaseUser): UserDomainModel {
-        Log.d("UserMapper",
+        Log.d("UserDomainModelMapper",
             "firebaseUserToUserModel(), uid = ${input.uid}, " +
                     "displayName = ${input.displayName}, email = ${input.email}")
         return UserDomainModel(
             uid = input.uid,
-            username = input.displayName!!,
+            username = input.displayName ?: "",
             email = input.email!!
         )
     }
