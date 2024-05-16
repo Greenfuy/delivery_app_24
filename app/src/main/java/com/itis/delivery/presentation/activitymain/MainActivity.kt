@@ -2,8 +2,12 @@ package com.itis.delivery.presentation.activitymain
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.itis.delivery.R
 import com.itis.delivery.databinding.ActivityMainBinding
 import com.itis.delivery.presentation.base.BaseActivity
@@ -23,6 +27,26 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
+
+        val controller = (supportFragmentManager
+            .findFragmentById(R.id.main_activity_container) as NavHostFragment)
+            .navController
+
+        findViewById<BottomNavigationView>(R.id.bnv_main).apply {
+            setupWithNavController(controller)
+        }
+
+        controller.addOnDestinationChangedListener { _, destination, _ ->
+            if (
+                destination.id == R.id.signInFragment
+                || destination.id == R.id.signUpFragment
+                || destination.id == R.id.productPageFragment) {
+
+                viewBinding.bnvMain.visibility = View.GONE
+            } else {
+                viewBinding.bnvMain.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onResume() {

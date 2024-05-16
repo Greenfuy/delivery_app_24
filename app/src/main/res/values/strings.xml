@@ -47,4 +47,9 @@
     <string name="prompt_try_again">Try again</string>
     <string name="prompt_about_the_product_title">About the product</string>
     <string name="prompt_desc_example">Product code: 34553413 \nBrand: Tropicana</string>
+    <string name="main">Main</string>
+    <string name="search">Search</string>
+    <string name="cart">Cart</string>
+    <string name="settings">Settings</string>
+    <string name="prompt_to_cart">To cart</string>
 </resources>

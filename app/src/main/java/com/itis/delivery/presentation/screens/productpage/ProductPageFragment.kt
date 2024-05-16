@@ -43,36 +43,7 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
 
             observe()
 
-            btnBuyNow.setOnClickListener {
-                // TODO: navigate to order
-            }
-
-            btnAddToCart.setOnClickListener {
-                val fl = viewModel.addToCart()
-                if (fl) {
-                    btnAddToCart.isEnabled = false
-                    btnMinus.isEnabled = true
-                }
-                else showSignInSnackBar()
-            }
-
-            btnPlus.setOnClickListener {
-                val fl = viewModel.addToCart()
-                if (fl) {
-                    btnAddToCart.isEnabled = false
-                    btnMinus.isEnabled = true
-                }
-                else showSignInSnackBar()
-            }
-
-            btnMinus.setOnClickListener {
-                val fl = viewModel.removeFromCart()
-                if (!fl) showSignInSnackBar()
-            }
-
-            swipeRefresh.setOnRefreshListener {
-                viewModel.refresh()
-            }
+            initListeners()
         }
     }
 
@@ -82,10 +53,12 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
             viewBinding.mtvInCartCount.text = it.toString()
             if (it == 0L) {
                 viewBinding.btnMinus.isEnabled = false
-                viewBinding.btnAddToCart.isEnabled = true
+                viewBinding.btnAddToCart.visibility = View.VISIBLE
+                viewBinding.btnToCart.visibility = View.GONE
             } else {
                 viewBinding.btnMinus.isEnabled = true
-                viewBinding.btnAddToCart.isEnabled = false
+                viewBinding.btnAddToCart.visibility = View.GONE
+                viewBinding.btnToCart.visibility = View.VISIBLE
             }
         }
     }
@@ -148,6 +121,46 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
                 )
             }
             .show()
+    }
+
+    private fun initListeners() {
+        with(viewBinding) {
+            btnBuyNow.setOnClickListener {
+                // TODO: navigate to order
+            }
+
+            btnAddToCart.setOnClickListener {
+                val fl = viewModel.addToCart()
+                if (fl) {
+                    btnMinus.isEnabled = true
+                }
+                else showSignInSnackBar()
+            }
+
+            btnToCart.setOnClickListener {
+                findNavController().safeNavigate(
+                    R.id.productPageFragment,
+                    R.id.action_productPageFragment_to_cartFragment
+                )
+            }
+
+            btnPlus.setOnClickListener {
+                val fl = viewModel.addToCart()
+                if (fl) {
+                    btnMinus.isEnabled = true
+                }
+                else showSignInSnackBar()
+            }
+
+            btnMinus.setOnClickListener {
+                val fl = viewModel.removeFromCart()
+                if (!fl) showSignInSnackBar()
+            }
+
+            swipeRefresh.setOnRefreshListener {
+                viewModel.refresh()
+            }
+        }
     }
 
     companion object {
