@@ -15,7 +15,6 @@ class MainAdapter(
     private val onSearchClick: () -> Unit,
     private val onProductClick: (ProductUiModel) -> Unit,
     private val onCategoryClick: (CategoryUiModel) -> Unit,
-    private val onProductToCartClick: (ProductUiModel) -> Unit,
     private val categoryList: List<CategoryUiModel>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -37,8 +36,7 @@ class MainAdapter(
                     false
                 ),
                 ProductAdapter(
-                    onProductClick,
-                    onProductToCartClick
+                    onProductClick
                 ).also { it.setList(productList) }
             )
             else -> throw IllegalArgumentException("Invalid view type")

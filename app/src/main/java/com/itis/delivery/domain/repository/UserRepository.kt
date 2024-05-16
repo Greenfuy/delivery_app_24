@@ -10,4 +10,8 @@ interface UserRepository {
     ): UserDomainModel
     suspend fun signIn(email: String, password: String): UserDomainModel
     suspend fun getUserById(userId: String): UserDomainModel
+
+    suspend fun getCurrentUserId(): String?
+
+    suspend fun signOut()
 }

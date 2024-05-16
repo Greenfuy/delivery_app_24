@@ -8,7 +8,8 @@ data class ProductUiModel(
     val categoriesTags: List<String>,
     val labels: String,
     val imageUrl: String,
-    val nutriments: NutrimentsDataUiModel
+    val nutriments: NutrimentsDataUiModel,
+    val price: Int
 )
 
 data class NutrimentsDataUiModel(

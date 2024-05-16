@@ -3,7 +3,7 @@ package com.itis.delivery.presentation.screens.signin
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.itis.delivery.domain.usecase.signin.SignInUseCase
+import com.itis.delivery.domain.usecase.auth.SignInUseCase
 import com.itis.delivery.presentation.base.BaseViewModel
 import com.itis.delivery.utils.AuthErrors
 import com.itis.delivery.utils.ExceptionHandlerDelegate

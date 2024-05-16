@@ -1,5 +1,6 @@
-package com.itis.delivery.domain.usecase.mainpage
+package com.itis.delivery.domain.usecase.product
 
+import android.util.Log
 import com.itis.delivery.domain.mapper.ProductUiModelMapper
 import com.itis.delivery.domain.repository.ProductRepository
 import com.itis.delivery.presentation.model.ProductUiModel
@@ -7,14 +8,18 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetProductsUseCase @Inject constructor(
+class GetProductUseCase @Inject constructor(
     private val productRepository: ProductRepository,
     private val dispatcher: CoroutineDispatcher,
     private val mapper: ProductUiModelMapper
 ) {
-    suspend operator fun invoke() : List<ProductUiModel> {
+
+    suspend operator fun invoke(id: Long) : ProductUiModel {
         return withContext(dispatcher) {
-            mapper.mapDomainModelListToUiModelList(productRepository.getProducts())
+            Log.d("GetProductUseCase", "id: $id")
+            val domainModel = productRepository.getProductById(id)
+            if (domainModel != null) mapper.mapDomainModelToUiModel(domainModel)
+            else throw NullPointerException("Product not found")
         }
     }
 }

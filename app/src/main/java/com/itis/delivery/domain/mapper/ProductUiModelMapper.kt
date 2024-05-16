@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class ProductUiModelMapper @Inject constructor() {
 
-    private fun mapDomainModelToUiModel(input: ProductDomainModel) : ProductUiModel {
+    fun mapDomainModelToUiModel(input: ProductDomainModel) : ProductUiModel {
         with(input) {
             return ProductUiModel(
                 id = id,
@@ -26,7 +26,8 @@ class ProductUiModelMapper @Inject constructor() {
                     salt = nutriments.salt,
                     saturatedFat = nutriments.saturatedFat,
                     sugars = nutriments.sugars
-                )
+                ),
+                price = price
             )
         }
     }

@@ -6,7 +6,7 @@ interface ProductRepository {
 
     suspend fun getProducts() : List<ProductDomainModel>
 
-    suspend fun getProductById(productId: String) : ProductDomainModel?
+    suspend fun getProductById(productId: Long) : ProductDomainModel?
 
     suspend fun getProductsByCategory(categoryTag: String) : List<ProductDomainModel>
 

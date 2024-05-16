@@ -5,11 +5,11 @@ import com.bumptech.glide.Glide
 import com.itis.delivery.R
 import com.itis.delivery.databinding.ItemProductBinding
 import com.itis.delivery.presentation.model.ProductUiModel
+import com.itis.delivery.utils.toPrice
 
 class ProductItemHolder(
     private val binding: ItemProductBinding,
     private val onProductClick: (ProductUiModel) -> Unit,
-    private val onProductToCartClick: (ProductUiModel) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindItem(item: ProductUiModel) {
@@ -19,15 +19,11 @@ class ProductItemHolder(
             .error(R.drawable.no_image)
             .into(binding.ivProduct)
 
+        binding.mtvPrice.text = toPrice(item.price)
+
         binding.root.setOnClickListener {
             onProductClick(item)
         }
-        binding.btnCart.setOnClickListener {
-            onProductToCartClick(item)
-        }
     }
 
-    fun changeInCartButtonStatus(status: Boolean) {
-        binding.btnCart.isChecked = status
-    }
 }

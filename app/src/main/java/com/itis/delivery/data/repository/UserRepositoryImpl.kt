@@ -3,6 +3,7 @@ package com.itis.delivery.data.repository
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.itis.delivery.base.Keys
 import com.itis.delivery.data.mapper.UserDomainModelMapper
 import com.itis.delivery.domain.model.UserDomainModel
 import com.itis.delivery.domain.repository.UserRepository
@@ -42,11 +43,16 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     private suspend fun saveUserToStore(user: UserDomainModel) {
-        db.collection("users").document(user.uid).set(user).await()
+        db.collection(Keys.USERS_COLLECTION_KEY).document(user.uid).set(user).await()
     }
 
     override suspend fun getUserById(userId: String): UserDomainModel = mapper.firebaseDocToUserModel(
-        db.collection("users").document(userId).get().await()
+        db.collection(Keys.USERS_COLLECTION_KEY).document(userId).get().await()
     )
 
+    override suspend fun getCurrentUserId(): String? = auth.currentUser?.uid
+
+    override suspend fun signOut() {
+        auth.signOut()
+    }
 }

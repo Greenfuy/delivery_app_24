@@ -1,9 +1,9 @@
-package com.itis.delivery.presentation.screens.main
+package com.itis.delivery.presentation.screens.mainpage
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.itis.delivery.domain.repository.CategoryRepository
-import com.itis.delivery.domain.usecase.mainpage.GetProductsUseCase
+import com.itis.delivery.domain.usecase.product.GetProductListUseCase
 import com.itis.delivery.presentation.base.BaseViewModel
 import com.itis.delivery.presentation.model.CategoryUiModel
 import com.itis.delivery.presentation.model.ProductUiModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getProductsUseCase: GetProductsUseCase,
+    private val getProductListUseCase: GetProductListUseCase,
     private val exceptionHandlerDelegate: ExceptionHandlerDelegate,
     private val categoryRepository: CategoryRepository
 ) : BaseViewModel() {
@@ -40,7 +40,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoading.value = true
             runSuspendCatching(exceptionHandlerDelegate = exceptionHandlerDelegate) {
-                getProductsUseCase.invoke()
+                getProductListUseCase.invoke()
             }.onSuccess {
                 _productList.value = it
                 Log.d("MainViewModel", "productList.size(): ${it.size}")
@@ -52,5 +52,10 @@ class MainViewModel @Inject constructor(
             }
             _isLoading.value = false
         }
+    }
+
+    fun refresh() {
+        categoryList = categoryRepository.getCategories()
+        setProducts()
     }
 }

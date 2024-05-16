@@ -7,10 +7,11 @@ import com.itis.delivery.data.remote.pojo.response.isNotFull
 import com.itis.delivery.domain.model.NutrimentsDataDomainModel
 import com.itis.delivery.domain.model.ProductDomainModel
 import javax.inject.Inject
+import kotlin.random.Random
 
 class ProductDomainModelMapper @Inject constructor() {
 
-    fun mapResponseToDomainModel(input: ProductResponse): ProductDomainModel? {
+    private fun mapResponseToDomainModel(input: ProductResponse): ProductDomainModel? {
         with(input) {
             if (input.isNotFull().not()) {
                 return ProductDomainModel(
@@ -29,7 +30,8 @@ class ProductDomainModelMapper @Inject constructor() {
                         salt = nutriments.salt,
                         saturatedFat = nutriments.saturatedFat,
                         sugars = nutriments.sugars
-                    )
+                    ),
+                    price = Random.nextInt(20, 300)
                 )
             }
             return null

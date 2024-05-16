@@ -1,7 +1,6 @@
 package com.itis.delivery.data.remote
 
 import com.itis.delivery.data.remote.pojo.response.ProductListResponse
-import com.itis.delivery.data.remote.pojo.response.ProductResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -22,6 +21,6 @@ interface OpenFoodFactsApi {
 
     @GET("search.pl")
     suspend fun getProductById(
-        @Query(value = "id") id: String
-    ): ProductResponse?
+        @Query(value = "code") code: Long
+    ): ProductListResponse?
 }

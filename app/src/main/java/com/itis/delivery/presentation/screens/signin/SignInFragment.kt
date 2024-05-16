@@ -9,6 +9,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.itis.delivery.R
 import com.itis.delivery.databinding.FragmentSignInBinding
 import com.itis.delivery.presentation.base.BaseFragment
+import com.itis.delivery.utils.safeNavigate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +31,10 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
             initButtonListeners()
 
             notRegisteredMtv.setOnClickListener {
-                findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+                findNavController().safeNavigate(
+                    R.id.signInFragment,
+                    R.id.action_signInFragment_to_signUpFragment
+                )
             }
         }
     }
@@ -72,7 +76,11 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
             success.observe {
                 if (it) {
-                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+                    findNavController().safeNavigate(
+                        R.id.signInFragment,
+                        R.id.action_signInFragment_to_mainFragment
+                    )
+                    showSnackBar(getString(R.string.prompt_successful_sign_in))
                 }
             }
         }

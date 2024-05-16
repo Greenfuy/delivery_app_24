@@ -3,7 +3,7 @@ package com.itis.delivery.presentation.screens.signup
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.itis.delivery.domain.usecase.signup.SignUpUseCase
+import com.itis.delivery.domain.usecase.auth.SignUpUseCase
 import com.itis.delivery.domain.usecase.validation.EmailValidateUseCase
 import com.itis.delivery.domain.usecase.validation.UsernameValidateUseCase
 import com.itis.delivery.domain.usecase.validation.PasswordValidateUseCase
