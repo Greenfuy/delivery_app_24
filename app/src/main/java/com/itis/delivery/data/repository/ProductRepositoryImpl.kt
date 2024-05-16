@@ -4,7 +4,6 @@ import com.itis.delivery.data.exceptions.ResponseEmptyException
 import com.itis.delivery.data.exceptions.ResponseNotFullException
 import com.itis.delivery.data.mapper.ProductDomainModelMapper
 import com.itis.delivery.data.remote.OpenFoodFactsApi
-import com.itis.delivery.data.remote.pojo.response.isNotFull
 import com.itis.delivery.domain.model.ProductDomainModel
 import com.itis.delivery.domain.repository.ProductRepository
 import javax.inject.Inject
@@ -22,14 +21,17 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProductById(productId: String): ProductDomainModel? {
+    override suspend fun getProductById(productId: Long): ProductDomainModel {
         val response = api.getProductById(productId)
-        if (response == null) {
+        if (response == null || response.products.isEmpty()) {
             throw ResponseEmptyException("Product($productId) is empty")
-        } else if (response.isNotFull()) {
-            throw ResponseNotFullException("Product($productId) is not full response")
         } else {
-            return mapper.mapResponseToDomainModel(input = response)
+            val products = mapper.mapResponseToDomainModelList(input = response)
+            if (products.isEmpty()) {
+                throw ResponseNotFullException("Product($productId) is not full")
+            } else {
+                return products.first()
+            }
         }
     }
 

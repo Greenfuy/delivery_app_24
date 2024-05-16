@@ -11,8 +11,7 @@ import com.itis.delivery.presentation.holder.ProductItemHolder
 import com.itis.delivery.presentation.model.ProductUiModel
 
 class ProductAdapter(
-    private val onProductClick: (ProductUiModel) -> Unit,
-    private val onProductToCartClick: (ProductUiModel) -> Unit
+    private val onProductClick: (ProductUiModel) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var productList = mutableListOf<ProductUiModel>()
@@ -24,23 +23,13 @@ class ProductAdapter(
                 parent,
                 false
             ),
-            onProductClick,
-            onProductToCartClick
+            onProductClick
         )
 
     override fun getItemCount(): Int = productList.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ProductItemHolder).bindItem(productList[position])
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
-        if (payloads.isNotEmpty()) {
-            (payloads.first() as? Boolean)?.let {
-                (holder as? ProductItemHolder)?.changeInCartButtonStatus(it)
-            }
-        }
-        super.onBindViewHolder(holder, position, payloads)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -50,12 +39,5 @@ class ProductAdapter(
         productList.clear()
         productList.addAll(list)
         diffResult.dispatchUpdatesTo(this)
-    }
-
-    fun getList(): List<ProductUiModel> = productList
-
-    fun updateItem(position: Int, item: ProductUiModel, isInCart: Boolean) {
-        productList[position] = item
-        notifyItemChanged(position, isInCart)
     }
 }

@@ -33,4 +33,18 @@
     <string name="prompt_category_example">Non alcoholic beverages</string>
     <string name="prompt_error_main">Something went wrong :(</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="zero_rating">0.0</string>
+    <string name="prompt_price_example">255₽</string>
+    <string name="ruble_sign">₽</string>
+    <string name="plus">+</string>
+    <string name="zero">0</string>
+    <string name="minus">–</string>
+    <string name="prompt_buy_now">Buy now</string>
+    <string name="prompt_session_time_out_error">You\'re session has been expired. Please, sign in again</string>
+    <string name="prompt_successful_sign_in">Successfully signed in</string>
+    <string name="prompt_must_be_authorized">You must be authorized</string>
+    <string name="refresh">Refresh</string>
+    <string name="prompt_try_again">Try again</string>
+    <string name="prompt_about_the_product_title">About the product</string>
+    <string name="prompt_desc_example">Product code: 34553413 \nBrand: Tropicana</string>
 </resources>

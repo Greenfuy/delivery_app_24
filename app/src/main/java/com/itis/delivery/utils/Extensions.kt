@@ -1,9 +1,14 @@
 package com.itis.delivery.utils
 
+import android.os.Bundle
+import androidx.annotation.IdRes
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import com.itis.delivery.presentation.model.ProductUiModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -32,3 +37,22 @@ inline fun <R> runSuspendCatching(
         Result.failure(exceptionHandlerDelegate.handleException(e))
     }
 }
+
+
+fun NavController.safeNavigate(direction: NavDirections) {
+    currentDestination?.getAction(direction.actionId)?.run { navigate(direction) }
+}
+fun NavController.safeNavigate(
+    @IdRes currentDestinationId: Int,
+    @IdRes id: Int,
+    args: Bundle? = null
+) {
+    if (currentDestinationId == currentDestination?.id) {
+        navigate(id, args)
+    }
+}
+
+fun toPrice(price: Int) = "$price₽"
+
+fun getShortDescription(product: ProductUiModel) =
+    "Product code: ${product.id} \nBrand: ${product.brands}"

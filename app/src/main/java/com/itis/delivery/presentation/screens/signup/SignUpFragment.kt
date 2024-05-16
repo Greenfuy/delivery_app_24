@@ -10,6 +10,7 @@ import com.itis.delivery.R
 import com.itis.delivery.databinding.FragmentSignUpBinding
 import com.itis.delivery.presentation.base.BaseFragment
 import com.itis.delivery.utils.Regexes
+import com.itis.delivery.utils.safeNavigate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +31,10 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
             initButtonListeners()
 
             notRegisteredMtv.setOnClickListener {
-                findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+                findNavController().safeNavigate(
+                    R.id.signUpFragment,
+                    R.id.action_signUpFragment_to_signInFragment
+                )
             }
         }
     }

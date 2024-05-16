@@ -8,7 +8,8 @@ class ProductDomainModel(
     val categoriesTags: List<String>,
     val labels: String,
     val imageUrl: String,
-    val nutriments: NutrimentsDataDomainModel
+    val nutriments: NutrimentsDataDomainModel,
+    val price: Int
 )
 
 class NutrimentsDataDomainModel(
