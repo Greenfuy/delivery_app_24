@@ -7,4 +7,6 @@ interface RateRepository {
     suspend fun addRate(productId: Long, rate: Int) : Boolean
 
     suspend fun isProductRated(productId: Long) : Boolean
+
+    suspend fun getProductIndicesByRate(rate: Int) : List<Long>
 }

@@ -1,4 +1,4 @@
-package com.itis.delivery.utils
+package com.itis.delivery.base
 
 enum class AuthErrors {
     INVALID_DATA,

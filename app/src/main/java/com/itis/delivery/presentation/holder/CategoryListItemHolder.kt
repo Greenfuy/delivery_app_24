@@ -7,15 +7,10 @@ import com.itis.delivery.presentation.adapter.CategoryAdapter
 
 class CategoryListItemHolder(
     private val binding: ItemCategoryListBinding,
-    private val onSearchClick: () -> Unit,
     private val adapter: CategoryAdapter
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindItem() {
-        binding.sbSearch.setOnClickListener {
-            onSearchClick
-        }
-
         binding.rvCategories.adapter = adapter
         binding.rvCategories.layoutManager = StaggeredGridLayoutManager(
             1,

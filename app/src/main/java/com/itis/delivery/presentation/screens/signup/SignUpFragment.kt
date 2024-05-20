@@ -9,7 +9,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.itis.delivery.R
 import com.itis.delivery.databinding.FragmentSignUpBinding
 import com.itis.delivery.presentation.base.BaseFragment
-import com.itis.delivery.utils.Regexes
+import com.itis.delivery.base.Regexes
 import com.itis.delivery.utils.safeNavigate
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -114,9 +114,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                 }
             }
             success.observe {
-                if (it) {
-                    findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
-                }
+                if (it) findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
             }
         }
     }

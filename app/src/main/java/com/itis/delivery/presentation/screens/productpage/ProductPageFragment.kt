@@ -10,6 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.itis.delivery.R
+import com.itis.delivery.base.Keys.PRODUCT_ID
 import com.itis.delivery.data.exceptions.UserNotAuthorizedException
 import com.itis.delivery.databinding.FragmentProductPageBinding
 import com.itis.delivery.presentation.base.BaseFragment
@@ -39,12 +40,21 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.run {
-            root.visibility = View.GONE
-
+            swipeRefresh.visibility = View.GONE
             observe()
-
             initListeners()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        changeLoadingVisibility(root = viewBinding.swipeRefresh,  isVisible = false)
+        changeErrorVisibility(
+            root = viewBinding.swipeRefresh,
+            isVisible = false,
+            btnOnClickListener = {}
+        )
     }
 
     private fun inCartCountObserve() {
@@ -59,54 +69,6 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
                 viewBinding.btnMinus.isEnabled = true
                 viewBinding.btnAddToCart.visibility = View.GONE
                 viewBinding.btnToCart.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    private fun observe() {
-        with(viewModel) {
-            inCartCountObserve()
-
-            product.observe {
-                viewBinding.swipeRefresh.isRefreshing = false
-                if (it != null) {
-                    Log.d("ProductPageFragment", "productId: ${it.id}")
-                    viewBinding.mtvProductName.text = it.name
-                    viewBinding.mtvPrice.text = toPrice(it.price)
-                    Glide.with(viewBinding.root)
-                        .load(it.imageUrl)
-                        .error(R.drawable.no_image)
-                        .into(viewBinding.ivProduct)
-                    changeErrorVisibility(
-                        isVisible = false,
-                        viewBinding = viewBinding,
-                        btnOnClickListener = { viewModel.refresh() }
-                    )
-                    viewBinding.mtvDesc.text = getShortDescription(it)
-                    viewBinding.root.visibility = View.VISIBLE
-                }
-            }
-
-            rate.observe {
-                if (it >= 0.0) {
-                    viewBinding.mtvRating.text = it.toString()
-                    viewBinding.rbRating.rating = it.toFloat()
-                }
-            }
-
-            lifecycleScope.launch {
-                errorsChannel.consumeEach { error ->
-                    if (error is UserNotAuthorizedException) {
-                        showSignInSnackBar()
-                    } else {
-                        Log.e("ProductPageFragment", "error: $error", error)
-                        changeErrorVisibility(
-                            isVisible = true,
-                            viewBinding = viewBinding,
-                            btnOnClickListener = { viewModel.refresh() }
-                        )
-                    }
-                }
             }
         }
     }
@@ -163,9 +125,51 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
         }
     }
 
-    companion object {
-        const val PRODUCT_ID = "product_id"
+    private fun observe() {
+        with(viewModel) {
+            inCartCountObserve()
+            product.observe {
+                viewBinding.swipeRefresh.isRefreshing = false
+                if (it != null) {
+                    Log.d("ProductPageFragment", "productId: ${it.id}")
+                    viewBinding.mtvProductName.text = it.name
+                    viewBinding.mtvPrice.text = toPrice(it.price)
+                    Glide.with(viewBinding.root)
+                        .load(it.imageUrl)
+                        .error(R.drawable.no_image)
+                        .into(viewBinding.ivProduct)
+                    viewBinding.mtvDesc.text = getShortDescription(it)
+                    viewBinding.root.visibility = View.VISIBLE
+                }
+            }
+            rate.observe {
+                if (it >= 0.0) {
+                    viewBinding.mtvRating.text = it.toString()
+                    viewBinding.rbRating.rating = it.toFloat()
+                }
+            }
+            isLoading.observe {
+                changeErrorVisibility(
+                    root = viewBinding.swipeRefresh,
+                    isVisible = false,
+                    btnOnClickListener = {}
+                )
+                changeLoadingVisibility(root = viewBinding.swipeRefresh, isVisible = it)
+            }
+            lifecycleScope.launch {
+                errorsChannel.consumeEach { error ->
+                    if (error is UserNotAuthorizedException) showSignInSnackBar()
+                    else changeErrorVisibility(
+                            root = viewBinding.swipeRefresh,
+                            isVisible = true,
+                            btnOnClickListener = { viewModel.refresh() }
+                        )
+                }
+            }
+        }
+    }
 
+    companion object {
         fun newInstance(productId: Long) =
             ProductPageFragment().apply {
                 arguments = Bundle().apply {

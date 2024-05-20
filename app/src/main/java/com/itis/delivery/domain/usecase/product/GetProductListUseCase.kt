@@ -10,11 +10,11 @@ import javax.inject.Inject
 class GetProductListUseCase @Inject constructor(
     private val productRepository: ProductRepository,
     private val dispatcher: CoroutineDispatcher,
-    private val mapper: ProductUiModelMapper
+    private val mapper: ProductUiModelMapper,
 ) {
-    suspend operator fun invoke() : List<ProductUiModel> {
+    suspend operator fun invoke(page: Int) : List<ProductUiModel> {
         return withContext(dispatcher) {
-            mapper.mapDomainModelListToUiModelList(productRepository.getProducts())
+            mapper.mapDomainModelListToUiModelList(productRepository.getProducts(page))
         }
     }
 }

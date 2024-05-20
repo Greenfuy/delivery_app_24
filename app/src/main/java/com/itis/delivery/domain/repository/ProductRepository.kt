@@ -4,11 +4,19 @@ import com.itis.delivery.domain.model.ProductDomainModel
 
 interface ProductRepository {
 
-    suspend fun getProducts() : List<ProductDomainModel>
+    suspend fun getProducts(page: Int) : List<ProductDomainModel>
 
     suspend fun getProductById(productId: Long) : ProductDomainModel?
 
-    suspend fun getProductsByCategory(categoryTag: String) : List<ProductDomainModel>
+    suspend fun getProductsByIndices(vararg productIds: Long, page: Int) : List<ProductDomainModel>
 
-    suspend fun getProductsBySearchTerm(searchTerm: String) : List<ProductDomainModel>
+    suspend fun getProductsByIndicesAndSearchTerm(
+        vararg productIds: Long,
+        searchTerm: String,
+        page: Int
+    ) : List<ProductDomainModel>
+
+    suspend fun getProductsByCategory(categoryTag: String, page: Int) : List<ProductDomainModel>
+
+    suspend fun getProductsBySearchTerm(searchTerm: String, page: Int) : List<ProductDomainModel>
 }

@@ -52,4 +52,15 @@
     <string name="cart">Cart</string>
     <string name="settings">Settings</string>
     <string name="prompt_to_cart">To cart</string>
+    <string name="prompt_result_search_title_example">Result Search</string>
+    <string name="prompt_no_results">No results</string>
+    <string name="prompt_by_rating">By rating</string>
+    <string name="prompt_3_stars">3 stars or more</string>
+    <string name="prompt_any">Any</string>
+    <string name="prompt_4_stars">4 stars or more</string>
+    <string name="prompt_by_price">By price</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="prompt_sort_by">Sort by</string>
+    <string name="submit">Submit</string>
 </resources>

@@ -24,38 +24,41 @@ class MainViewModel @Inject constructor(
 
     private val _productList = MutableStateFlow<List<ProductUiModel>>(emptyList())
     val productList = _productList.asStateFlow()
-
     // TODO: create a more optimal way to receive categories
     var categoryList = emptyList<CategoryUiModel>()
-
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
+    private var page = 1
+
     init {
         categoryList = categoryRepository.getCategories()
-        setProducts()
+        getProductList()
     }
 
-    private fun setProducts() {
+    fun getProductList() {
         viewModelScope.launch {
-            _isLoading.value = true
+            if (page == 1) _isLoading.value = true
             runSuspendCatching(exceptionHandlerDelegate = exceptionHandlerDelegate) {
-                getProductListUseCase.invoke()
+                getProductListUseCase.invoke(page)
             }.onSuccess {
+                _isLoading.value = false
                 _productList.value = it
+                page++
                 Log.d("MainViewModel", "productList.size(): ${it.size}")
             }.onFailure {
+                _isLoading.value = false
                 exceptionHandlerDelegate.handleException(it).also { throwable ->
                     errorsChannel.send(throwable)
                 }
                 Log.e("MainViewModel", "Error: $it", it)
             }
-            _isLoading.value = false
         }
     }
 
     fun refresh() {
+        page = 1
         categoryList = categoryRepository.getCategories()
-        setProducts()
+        getProductList()
     }
 }

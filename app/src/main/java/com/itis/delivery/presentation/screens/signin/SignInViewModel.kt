@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.itis.delivery.domain.usecase.auth.SignInUseCase
 import com.itis.delivery.presentation.base.BaseViewModel
-import com.itis.delivery.utils.AuthErrors
+import com.itis.delivery.base.AuthErrors
 import com.itis.delivery.utils.ExceptionHandlerDelegate
 import com.itis.delivery.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,4 +1,4 @@
-package com.itis.delivery.utils
+package com.itis.delivery.base
 
 object Regexes {
     val nameRegex = "(?=.*[a-z]).{5,}\$".toRegex()

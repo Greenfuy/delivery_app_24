@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.screens.search.SortFragment">
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_return"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:background="?attr/colorSurface"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prompt_sort_by"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginVertical="20dp"
+            android:paddingHorizontal="16dp" />
+    </Toolbar>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="12dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_title_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_by_rating"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginVertical="12dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <RadioGroup
+                android:id="@+id/rg_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/mtv_title_rating"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <RadioButton
+                    android:id="@+id/rb_3_stars"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_3_stars"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_4_stars"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_4_stars"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_any"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_any"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="12dp"
+        app:layout_constraintTop_toBottomOf="@id/card_rating"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_title_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_by_price"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginVertical="12dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_price_start"
+                android:layout_width="172dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:labelFor="@+id/et_price"
+                app:layout_constraintTop_toBottomOf="@id/mtv_title_price"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/til_price_end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:helperText="@string/from">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_price_start"
+                    android:layout_width="match_parent"
+                    android:inputType="number"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_price_end"
+                android:layout_width="172dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:labelFor="@+id/et_price"
+                app:layout_constraintTop_toBottomOf="@id/mtv_title_price"
+                app:layout_constraintStart_toEndOf="@id/til_price_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:helperText="@string/to">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_price_end"
+                    android:layout_width="match_parent"
+                    android:inputType="number"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_submit"
+        android:enabled="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="36dp"
+        android:text="@string/submit"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_price" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

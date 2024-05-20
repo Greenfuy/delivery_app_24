@@ -52,6 +52,7 @@ fun NavController.safeNavigate(
     }
 }
 
+
 fun toPrice(price: Int) = "$price₽"
 
 fun getShortDescription(product: ProductUiModel) =
