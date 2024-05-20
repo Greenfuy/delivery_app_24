@@ -34,6 +34,8 @@ class ProductPageViewModel @AssistedInject constructor(
     val product = _product.asStateFlow()
     private val _rate = MutableStateFlow(-1.0)
     val rate = _rate.asStateFlow()
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
 
     private var userId: String? = null
 
@@ -111,12 +113,15 @@ class ProductPageViewModel @AssistedInject constructor(
 
     private fun getProduct() {
         viewModelScope.launch {
+            _isLoading.value = true
             runSuspendCatching(exceptionHandlerDelegate = exceptionHandlerDelegate) {
                 getProductUseCase.invoke(productId)
             }.onSuccess {
                 Log.d("ProductPageViewModel", "product: $it")
+                _isLoading.value = false
                 _product.value = it
             }.onFailure {
+                _isLoading.value = false
                 exceptionHandlerDelegate.handleException(it).also { throwable ->
                     errorsChannel.send(throwable)
                 }

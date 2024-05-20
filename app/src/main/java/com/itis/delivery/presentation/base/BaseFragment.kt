@@ -3,10 +3,9 @@ package com.itis.delivery.presentation.base
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.itis.delivery.R
-import com.itis.delivery.utils.AuthErrors
+import com.itis.delivery.base.AuthErrors
 import com.itis.delivery.utils.observe
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -37,17 +36,22 @@ abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
     }
 
     protected fun changeErrorVisibility(
-        viewBinding: ViewBinding,
+        root: View,
         isVisible: Boolean,
         btnOnClickListener: View.OnClickListener
     ) {
-        with(viewBinding) {
-            val errorLayout = activity?.findViewById<View>(R.id.layout_error)
-            errorLayout?.visibility = if (isVisible) View.VISIBLE else View.GONE
+        val errorLayout = activity?.findViewById<View>(R.id.layout_error)
+        errorLayout?.visibility = if (isVisible) View.VISIBLE else View.GONE
 
-            val tryAgainBtn = activity?.findViewById<View>(R.id.btn_try_again)
-            tryAgainBtn?.setOnClickListener(btnOnClickListener)
-            root.visibility = if (isVisible) View.GONE else View.VISIBLE
-        }
+        val tryAgainBtn = activity?.findViewById<View>(R.id.btn_try_again)
+        tryAgainBtn?.setOnClickListener(btnOnClickListener)
+        root.visibility = if (isVisible) View.GONE else View.VISIBLE
+    }
+
+    protected fun changeLoadingVisibility(root: View, isVisible: Boolean) {
+        val loadingLayout = activity?.findViewById<View>(R.id.layout_loading)
+        loadingLayout?.visibility = if (isVisible) View.VISIBLE else View.GONE
+
+        root.visibility = if (isVisible) View.GONE else View.VISIBLE
     }
 }

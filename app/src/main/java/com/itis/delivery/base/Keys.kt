@@ -9,4 +9,13 @@ object Keys {
     const val CARTS_COLLECTION_KEY = "carts"
     const val RATES_COLLECTION_KEY = "rates"
     const val USERS_COLLECTION_KEY = "users"
+
+    const val USER_ID = "userId"
+    const val PRODUCT_ID = "productId"
+    const val RATE = "rate"
+    const val SEARCH_TERM = "searchTerm"
+    const val CATEGORY_TAG = "categoryTag"
+    const val PRICE_START = "priceStart"
+    const val PRICE_END = "priceEnd"
+    const val COUNT = "count"
 }

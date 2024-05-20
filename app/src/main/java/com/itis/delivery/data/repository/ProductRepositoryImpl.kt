@@ -12,8 +12,8 @@ class ProductRepositoryImpl @Inject constructor(
     private val api: OpenFoodFactsApi,
     private val mapper: ProductDomainModelMapper
 ) : ProductRepository {
-    override suspend fun getProducts(): List<ProductDomainModel> {
-        val response = api.getProducts()
+    override suspend fun getProducts(page: Int): List<ProductDomainModel> {
+        val response = api.getProducts(page)
         if (response == null || response.products.isEmpty()) {
             throw ResponseEmptyException("Products list is empty")
         } else {
@@ -22,21 +22,19 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getProductById(productId: Long): ProductDomainModel {
-        val response = api.getProductById(productId)
+        val response = api.getProductById(productId.toString())
         if (response == null || response.products.isEmpty()) {
-            throw ResponseEmptyException("Product($productId) is empty")
+            throw ResponseNotFullException("Products list is not full")
         } else {
-            val products = mapper.mapResponseToDomainModelList(input = response)
-            if (products.isEmpty()) {
-                throw ResponseNotFullException("Product($productId) is not full")
-            } else {
-                return products.first()
-            }
+            return mapper.mapResponseToDomainModelList(input = response).first()
         }
     }
 
-    override suspend fun getProductsByCategory(categoryTag: String): List<ProductDomainModel> {
-        val response = api.getProductsByCategory(categoryTag)
+    override suspend fun getProductsByIndices(
+        vararg productIds: Long,
+        page: Int
+        ): List<ProductDomainModel> {
+        val response = api.getProductsByIndices(productIds.joinToString(","), page)
         if (response == null || response.products.isEmpty()) {
             throw ResponseEmptyException("Products list is empty")
         } else {
@@ -44,8 +42,40 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProductsBySearchTerm(searchTerm: String): List<ProductDomainModel> {
-        val response = api.getProductsBySearchTerm(searchTerm)
+    override suspend fun getProductsByIndicesAndSearchTerm(
+        vararg productIds: Long,
+        searchTerm: String,
+        page: Int
+    ): List<ProductDomainModel> {
+        val response = api.getProductsByIndicesAndSearchTerm(
+            productIds.joinToString(","),
+            searchTerm,
+            page
+        )
+        if (response == null || response.products.isEmpty()) {
+            throw ResponseEmptyException("Products list is empty")
+        } else {
+            return mapper.mapResponseToDomainModelList(input = response)
+        }
+    }
+
+    override suspend fun getProductsByCategory(
+        categoryTag: String,
+        page: Int
+        ): List<ProductDomainModel> {
+        val response = api.getProductsByCategory(categoryTag, page)
+        if (response == null || response.products.isEmpty()) {
+            throw ResponseEmptyException("Products list is empty")
+        } else {
+            return mapper.mapResponseToDomainModelList(input = response)
+        }
+    }
+
+    override suspend fun getProductsBySearchTerm(
+        searchTerm: String,
+        page: Int
+        ): List<ProductDomainModel> {
+        val response = api.getProductsBySearchTerm(searchTerm, page)
         if (response == null || response.products.isEmpty()) {
             throw ResponseEmptyException("Products list is empty")
         } else {

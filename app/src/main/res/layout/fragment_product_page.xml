@@ -154,7 +154,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_plus"
             app:layout_constraintStart_toEndOf="@+id/btn_buy_now" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

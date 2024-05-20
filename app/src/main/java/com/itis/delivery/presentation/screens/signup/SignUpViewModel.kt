@@ -8,7 +8,7 @@ import com.itis.delivery.domain.usecase.validation.EmailValidateUseCase
 import com.itis.delivery.domain.usecase.validation.UsernameValidateUseCase
 import com.itis.delivery.domain.usecase.validation.PasswordValidateUseCase
 import com.itis.delivery.presentation.base.BaseViewModel
-import com.itis.delivery.utils.AuthErrors
+import com.itis.delivery.base.AuthErrors
 import com.itis.delivery.utils.ExceptionHandlerDelegate
 import com.itis.delivery.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel

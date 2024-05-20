@@ -3,18 +3,15 @@ package com.itis.delivery.presentation.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.itis.delivery.databinding.ItemProductBinding
-import com.itis.delivery.presentation.adapter.diffutil.ProductDiffUtil
 import com.itis.delivery.presentation.holder.ProductItemHolder
 import com.itis.delivery.presentation.model.ProductUiModel
 
 class ProductAdapter(
+    private val productList: MutableList<ProductUiModel>,
     private val onProductClick: (ProductUiModel) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private var productList = mutableListOf<ProductUiModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         ProductItemHolder(
@@ -33,11 +30,8 @@ class ProductAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<ProductUiModel>) {
-        val diff = ProductDiffUtil(oldList = productList, newList = list)
-        val diffResult = DiffUtil.calculateDiff(diff)
-        productList.clear()
+    fun addProducts(list: List<ProductUiModel>) {
         productList.addAll(list)
-        diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 }

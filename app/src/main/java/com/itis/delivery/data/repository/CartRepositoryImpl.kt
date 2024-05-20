@@ -2,6 +2,9 @@ package com.itis.delivery.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.itis.delivery.base.Keys
+import com.itis.delivery.base.Keys.COUNT
+import com.itis.delivery.base.Keys.PRODUCT_ID
+import com.itis.delivery.base.Keys.USER_ID
 import com.itis.delivery.domain.model.CartModel
 import com.itis.delivery.domain.repository.CartRepository
 import kotlinx.coroutines.tasks.await
@@ -68,11 +71,5 @@ class CartRepositoryImpl @Inject constructor(
             .await()
             .documents
         return documents.isNotEmpty()
-    }
-
-    companion object {
-        const val USER_ID = "userId"
-        const val PRODUCT_ID = "productId"
-        const val COUNT = "count"
     }
 }

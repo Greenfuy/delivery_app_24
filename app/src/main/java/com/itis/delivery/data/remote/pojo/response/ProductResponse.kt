@@ -26,6 +26,7 @@ fun ProductResponse.isNotFull() =
             || quantity.isNullOrEmpty()
             || categoriesTags.isNullOrEmpty()
             || imageUrl.isNullOrEmpty()
+            || labels.isNullOrEmpty()
             || nutriments == NutrimentsData(
         carbohydrates = Constants.EMPTY_FLOAT_DATA,
         energyKcal = Constants.EMPTY_FLOAT_DATA,
