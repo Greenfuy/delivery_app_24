@@ -9,6 +9,7 @@ object Keys {
     const val CARTS_COLLECTION_KEY = "carts"
     const val RATES_COLLECTION_KEY = "rates"
     const val USERS_COLLECTION_KEY = "users"
+    const val ORDERS_COLLECTION_KEY = "orders"
 
     const val USER_ID = "userId"
     const val PRODUCT_ID = "productId"
@@ -18,4 +19,8 @@ object Keys {
     const val PRICE_START = "priceStart"
     const val PRICE_END = "priceEnd"
     const val COUNT = "count"
+    const val ORDER_NUMBER = "orderNumber"
+    const val LAST_CHANGE = "lastChange"
+    const val STATE = "state"
+    const val PRODUCTS = "products"
 }

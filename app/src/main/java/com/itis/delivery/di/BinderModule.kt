@@ -2,11 +2,13 @@ package com.itis.delivery.di
 
 import com.itis.delivery.data.repository.CartRepositoryImpl
 import com.itis.delivery.data.repository.CategoryRepositoryImpl
+import com.itis.delivery.data.repository.OrderRepositoryImpl
 import com.itis.delivery.data.repository.ProductRepositoryImpl
 import com.itis.delivery.data.repository.RateRepositoryImpl
 import com.itis.delivery.data.repository.UserRepositoryImpl
 import com.itis.delivery.domain.repository.CartRepository
 import com.itis.delivery.domain.repository.CategoryRepository
+import com.itis.delivery.domain.repository.OrderRepository
 import com.itis.delivery.domain.repository.ProductRepository
 import com.itis.delivery.domain.repository.RateRepository
 import com.itis.delivery.domain.repository.UserRepository
@@ -40,4 +42,8 @@ interface BinderModule {
     @Binds
     @Singleton
     fun bindRateRepositoryImpl(rateRepositoryImpl: RateRepositoryImpl) : RateRepository
+
+    @Binds
+    @Singleton
+    fun bindOrderRepositoryImpl(orderRepositoryImpl: OrderRepositoryImpl) : OrderRepository
 }

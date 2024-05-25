@@ -39,13 +39,6 @@ class ProductPageViewModel @AssistedInject constructor(
 
     private var userId: String? = null
 
-
-    init {
-        getRate()
-        getProduct()
-        getCurrentUserId()
-    }
-
     private fun getCurrentUserId() {
         viewModelScope.launch {
             runSuspendCatching(exceptionHandlerDelegate) {
@@ -62,7 +55,7 @@ class ProductPageViewModel @AssistedInject constructor(
         if (userId == null) return false
         viewModelScope.launch {
             runSuspendCatching(exceptionHandlerDelegate = exceptionHandlerDelegate) {
-                cartRepository.addToCart(userId!!, productId)
+                cartRepository.addToCart(productId)
             }.onSuccess {
                 getInCartCount()
                 Log.d("ProductPageViewModel", "Added to cart")
@@ -80,7 +73,7 @@ class ProductPageViewModel @AssistedInject constructor(
         if (userId == null) return false
         viewModelScope.launch {
             runSuspendCatching(exceptionHandlerDelegate = exceptionHandlerDelegate) {
-                cartRepository.removeFromCart(userId!!, productId)
+                cartRepository.removeFromCart(productId)
             }.onSuccess {
                 getInCartCount()
                 Log.d("ProductPageViewModel", "Removed from cart")
@@ -98,7 +91,7 @@ class ProductPageViewModel @AssistedInject constructor(
         if (userId == null) return
         viewModelScope.launch {
             runSuspendCatching(exceptionHandlerDelegate = exceptionHandlerDelegate) {
-                cartRepository.getInCartCount(userId!!, productId)
+                cartRepository.getInCartCount(productId)
             }.onSuccess {
                 _inCartCount.value = it
                 Log.d("ProductPageViewModel", "inCartCount: $it")

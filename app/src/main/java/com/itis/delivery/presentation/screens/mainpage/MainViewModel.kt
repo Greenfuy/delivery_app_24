@@ -33,7 +33,6 @@ class MainViewModel @Inject constructor(
 
     init {
         categoryList = categoryRepository.getCategories()
-        getProductList()
     }
 
     fun getProductList() {

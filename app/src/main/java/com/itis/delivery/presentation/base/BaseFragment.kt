@@ -35,7 +35,7 @@ abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
         }
     }
 
-    protected fun changeErrorVisibility(
+    protected fun setErrorVisibility(
         root: View,
         isVisible: Boolean,
         btnOnClickListener: View.OnClickListener
@@ -48,10 +48,13 @@ abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
         root.visibility = if (isVisible) View.GONE else View.VISIBLE
     }
 
-    protected fun changeLoadingVisibility(root: View, isVisible: Boolean) {
+    protected fun setLoadingVisibility(root: View, isVisible: Boolean) {
         val loadingLayout = activity?.findViewById<View>(R.id.layout_loading)
         loadingLayout?.visibility = if (isVisible) View.VISIBLE else View.GONE
 
         root.visibility = if (isVisible) View.GONE else View.VISIBLE
+    }
+
+    fun refreshFragment() {
     }
 }

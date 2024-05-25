@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/iv_product"
+            android:layout_width="132dp"
+            android:layout_height="132dp"
+            android:layout_marginVertical="16dp"
+            android:layout_marginHorizontal="12dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/no_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/mtv_product_name"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_product_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/prompt_product_name_example"
+            android:textSize="20sp"
+            android:textAlignment="viewStart"
+            android:maxLines="2"
+            android:layout_marginVertical="24dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_product" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prompt_price_example"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            android:maxLines="2"
+            android:layout_marginVertical="12dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintTop_toBottomOf="@id/mtv_product_name"
+            app:layout_constraintStart_toEndOf="@id/iv_product" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cb_chosen"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginHorizontal="12dp"
+            app:layout_constraintTop_toBottomOf="@id/mtv_product_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/mtv_in_cart_count"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/btn_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:text="@string/plus"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:clickable="true"
+            android:padding="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toEndOf="@id/iv_product"
+            app:layout_constraintEnd_toStartOf="@id/mtv_in_cart_count"
+            app:layout_constraintTop_toBottomOf="@id/mtv_price"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_in_cart_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textAlignment="center"
+            android:textSize="28sp"
+            android:padding="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toEndOf="@id/btn_plus"
+            app:layout_constraintTop_toBottomOf="@id/mtv_price"
+            app:layout_constraintEnd_toStartOf="@id/btn_minus"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/btn_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:text="@string/minus"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            app:layout_constraintStart_toEndOf="@id/mtv_in_cart_count"
+            app:layout_constraintTop_toBottomOf="@id/mtv_price"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -7,9 +7,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.itis.delivery.R
+import com.itis.delivery.base.Regexes
 import com.itis.delivery.databinding.FragmentSignUpBinding
 import com.itis.delivery.presentation.base.BaseFragment
-import com.itis.delivery.base.Regexes
 import com.itis.delivery.utils.safeNavigate
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -100,6 +100,10 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                     && emailEt.error == null
                     && passwordEt.error == null
                     && confirmPasswordEt.error == null
+                    && !usernameEt.text.isNullOrEmpty()
+                    && !emailEt.text.isNullOrEmpty()
+                    && !passwordEt.text.isNullOrEmpty()
+                    && !confirmPasswordEt.text.isNullOrEmpty()
         }
     }
 

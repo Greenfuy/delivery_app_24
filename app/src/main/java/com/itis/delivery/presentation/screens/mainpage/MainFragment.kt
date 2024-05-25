@@ -1,13 +1,14 @@
 package com.itis.delivery.presentation.screens.mainpage
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.itis.delivery.R
 import com.itis.delivery.base.Keys.CATEGORY_TAG
 import com.itis.delivery.base.Keys.PRODUCT_ID
@@ -28,16 +29,27 @@ import kotlinx.coroutines.launch
 class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     private val viewModel: MainViewModel by viewModels()
-    private val viewBinding: FragmentMainBinding by viewBinding(FragmentMainBinding::bind)
+
+    private var _viewBinding: FragmentMainBinding? = null
+    private val viewBinding get() = _viewBinding!!
 
     private var adapter: MainAdapter? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _viewBinding = FragmentMainBinding.inflate(inflater, container, false)
+        return viewBinding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.run {
-            observe()
+        observe()
 
+        viewBinding.run {
             rvMain.layoutManager = GridLayoutManager(requireContext(), 2)
                 .apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -52,14 +64,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if (!recyclerView.canScrollVertically(1)) {
-                        viewModel.getProductList()
+                        if (adapter != null) viewModel.getProductList()
                     }
                 }
             })
 
             swipeRefresh.setOnRefreshListener {
-                observe()
-
                 viewModel.refresh()
             }
         }
@@ -68,18 +78,19 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     override fun onPause() {
         super.onPause()
 
-        changeLoadingVisibility(root = viewBinding.root,  isVisible = false)
-        changeErrorVisibility(
+        setLoadingVisibility(root = viewBinding.root,  isVisible = false)
+        setErrorVisibility(
             root = viewBinding.root,
             isVisible = false,
             btnOnClickListener = {}
         )
     }
 
-
     override fun onResume() {
         super.onResume()
+
         viewModel.refresh()
+
         viewBinding.rvMain.adapter = adapter
     }
 
@@ -128,17 +139,17 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             }
 
             isLoading.observe {
-                changeErrorVisibility(
+                setErrorVisibility(
                     root = viewBinding.root,
                     isVisible = false,
                     btnOnClickListener = {}
                 )
-                changeLoadingVisibility(root = viewBinding.root, isVisible = it)
+                setLoadingVisibility(root = viewBinding.root, isVisible = it)
             }
 
             lifecycleScope.launch {
                 errorsChannel.consumeEach {
-                    changeErrorVisibility(
+                    setErrorVisibility(
                         root = viewBinding.root,
                         isVisible = true,
                         btnOnClickListener = {viewModel.refresh()}

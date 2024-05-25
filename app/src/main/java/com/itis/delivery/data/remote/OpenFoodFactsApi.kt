@@ -30,8 +30,7 @@ interface OpenFoodFactsApi {
 
     @GET("search.pl")
     suspend fun getProductsByIndices(
-        @Query(value = "code") code: String,
-        @Query(value = "page") page: Int
+        @Query(value = "code") code: String
     ): ProductListResponse?
 
     @GET("search.pl")

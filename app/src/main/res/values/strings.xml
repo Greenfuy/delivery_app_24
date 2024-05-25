@@ -34,7 +34,7 @@
     <string name="prompt_error_main">Something went wrong :(</string>
     <string name="unknown_error">Unknown error</string>
     <string name="zero_rating">0.0</string>
-    <string name="prompt_price_example">255₽</string>
+    <string name="prompt_price_example">0₽</string>
     <string name="ruble_sign">₽</string>
     <string name="plus">+</string>
     <string name="zero">0</string>
@@ -63,4 +63,23 @@
     <string name="to">To</string>
     <string name="prompt_sort_by">Sort by</string>
     <string name="submit">Submit</string>
+    <string name="prompt_choose_items">Choose items</string>
+    <string name="prompt_make_an_order">Make an order</string>
+    <string name="prompt_zero_items">0 items</string>
+    <string name="prompt_empty_cart">Your cart is empty!</string>
+    <string name="prompt_items">%1$s item(s)</string>
+    <string name="prompt_products_removed">Product(s) successfully removed</string>
+    <string name="prompt_address">Address</string>
+    <string name="prompt_address_example">1412, Kremlevskaya st., Kazan, Tatarstan</string>
+    <string name="prompt_change_address">Change address</string>
+    <string name="prompt_apartment">Apartment</string>
+    <string name="prompt_street">Street</string>
+    <string name="prompt_city">City</string>
+    <string name="prompt_region">Region</string>
+    <string name="prompt_products">Products</string>
+    <string name="prompt_delivery_information">Delivery within 50–60 minutes \nPayment upon receipt</string>
+    <string name="prompt_some_error">Some error occurred. Try again later</string>
+    <string name="prompt_form_address">%1$s, %2$s, %3$s, %4$s</string>
+    <string name="prompt_error_empty_field">Field can not be empty</string>
+    <string name="prompt_order_success">Order successfully created</string>
 </resources>

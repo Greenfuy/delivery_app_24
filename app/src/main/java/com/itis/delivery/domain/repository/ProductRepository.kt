@@ -8,7 +8,7 @@ interface ProductRepository {
 
     suspend fun getProductById(productId: Long) : ProductDomainModel?
 
-    suspend fun getProductsByIndices(vararg productIds: Long, page: Int) : List<ProductDomainModel>
+    suspend fun getProductsByIndices(vararg productIds: Long) : List<ProductDomainModel>
 
     suspend fun getProductsByIndicesAndSearchTerm(
         vararg productIds: Long,

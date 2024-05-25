@@ -36,7 +36,7 @@ class ResultSearchViewModel @Inject constructor(
     private var priceStart = 0
     private var priceEnd = 0
     
-    fun getProductsBySearchTerm(searchTerm: String) {
+    private fun getProductsBySearchTerm(searchTerm: String) {
         state = STATE_SEARCH_TERM
         this.searchTerm = searchTerm
         viewModelScope.launch {
@@ -66,8 +66,8 @@ class ResultSearchViewModel @Inject constructor(
             runSuspendCatching(exceptionHandlerDelegate) {
                 getProductListByCategoryUseCase.invoke(categoryTag, page)
             }.onSuccess {
-                _isLoading.value = false
                 _productList.value = it
+                _isLoading.value = false
                 page++
                 Log.d("ResultSearchViewModel", "categoryTag: $categoryTag")
             }.onFailure {
@@ -87,14 +87,17 @@ class ResultSearchViewModel @Inject constructor(
         this.priceStart = priceStart
         this.priceEnd = priceEnd
         viewModelScope.launch {
+            if (page == 1) _isLoading.value = true
             runSuspendCatching(exceptionHandlerDelegate) {
                 getProductListByPriceAndRateUseCase
                     .invoke(searchTerm, priceStart, priceEnd, rate, page)
             }.onSuccess {
                 _productList.value = it
+                _isLoading.value = false
                 page++
                 Log.d("ResultSearchViewModel", "rate: $rate, priceStart: $priceStart, priceEnd: $priceEnd")
             }.onFailure {
+                _isLoading.value = false
                 exceptionHandlerDelegate.handleException(it).also { throwable ->
                     errorsChannel.send(throwable)
                 }
