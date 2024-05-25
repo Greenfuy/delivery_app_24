@@ -5,17 +5,23 @@ import com.itis.delivery.base.Keys
 import com.itis.delivery.base.Keys.COUNT
 import com.itis.delivery.base.Keys.PRODUCT_ID
 import com.itis.delivery.base.Keys.USER_ID
+import com.itis.delivery.data.exceptions.UserNotAuthorizedException
 import com.itis.delivery.domain.model.CartModel
 import com.itis.delivery.domain.repository.CartRepository
+import com.itis.delivery.domain.repository.UserRepository
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 import javax.inject.Inject
 
 class CartRepositoryImpl @Inject constructor(
-    private val db: FirebaseFirestore
+    private val db: FirebaseFirestore,
+    private val userRepository: UserRepository
 ) : CartRepository {
 
-    override suspend fun getInCartCount(userId: String, productId: Long): Long {
+    override suspend fun getInCartCount(productId: Long): Long {
+        val userId = userRepository.getCurrentUserId()
+        if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
+
         val documents = db.collection(Keys.CARTS_COLLECTION_KEY)
             .whereEqualTo(USER_ID, userId)
             .whereEqualTo(PRODUCT_ID, productId)
@@ -26,7 +32,10 @@ class CartRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun addToCart(userId: String, productId: Long): Boolean {
+    override suspend fun addToCart(productId: Long): Boolean {
+        val userId = userRepository.getCurrentUserId()
+        if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
+
         val documents = db.collection(Keys.CARTS_COLLECTION_KEY)
             .whereEqualTo(USER_ID, userId)
             .whereEqualTo(PRODUCT_ID, productId)
@@ -46,7 +55,10 @@ class CartRepositoryImpl @Inject constructor(
         return true
     }
 
-    override suspend fun removeFromCart(userId: String, productId: Long): Boolean {
+    override suspend fun removeFromCart(productId: Long): Boolean {
+        val userId = userRepository.getCurrentUserId()
+        if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
+
         val documents = db.collection(Keys.CARTS_COLLECTION_KEY)
             .whereEqualTo(USER_ID, userId)
             .whereEqualTo(PRODUCT_ID, productId)
@@ -63,7 +75,10 @@ class CartRepositoryImpl @Inject constructor(
         return false
     }
 
-    override suspend fun isInCart(userId: String,productId: Long): Boolean {
+    override suspend fun isInCart(productId: Long): Boolean {
+        val userId = userRepository.getCurrentUserId()
+        if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
+
         val documents = db.collection(Keys.CARTS_COLLECTION_KEY)
             .whereEqualTo(USER_ID, userId)
             .whereEqualTo(PRODUCT_ID, productId)
@@ -71,5 +86,56 @@ class CartRepositoryImpl @Inject constructor(
             .await()
             .documents
         return documents.isNotEmpty()
+    }
+
+    override suspend fun getCartList(): List<CartModel> {
+        val userId = userRepository.getCurrentUserId()
+        if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
+
+        val documents = db.collection(Keys.CARTS_COLLECTION_KEY)
+            .whereEqualTo(USER_ID, userId)
+            .get()
+            .await()
+            .documents
+        val result = mutableListOf<CartModel>()
+        documents.forEach {
+            it.toObject(CartModel::class.java)?.let { it1 -> result.add(it1) }
+        }
+        return result
+    }
+
+    override suspend fun getCartListByProductIndices(vararg productIds: Long): List<CartModel> {
+        val userId = userRepository.getCurrentUserId()
+        if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
+
+        val documents = db.collection(Keys.CARTS_COLLECTION_KEY)
+            .whereEqualTo(USER_ID, userId)
+            .whereIn(PRODUCT_ID, productIds.toMutableList())
+            .get()
+            .await()
+            .documents
+        val result = mutableListOf<CartModel>()
+        documents.forEach {
+            it.toObject(CartModel::class.java)?.let { it1 -> result.add(it1) }
+        }
+        return result
+    }
+
+    override suspend fun removeAll(vararg productIds: Long): Boolean {
+        val userId = userRepository.getCurrentUserId()
+        if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
+
+        if (userId.isEmpty()) return false
+        for (id in productIds) {
+            val documents = db.collection(Keys.CARTS_COLLECTION_KEY)
+                .whereEqualTo(PRODUCT_ID, id)
+                .whereEqualTo(USER_ID, userId)
+                .get()
+                .await()
+                .documents
+
+            if (documents.isNotEmpty()) documents.forEach { it.reference.delete().await() }
+        }
+        return true
     }
 }

@@ -30,11 +30,8 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProductsByIndices(
-        vararg productIds: Long,
-        page: Int
-        ): List<ProductDomainModel> {
-        val response = api.getProductsByIndices(productIds.joinToString(","), page)
+    override suspend fun getProductsByIndices(vararg productIds: Long): List<ProductDomainModel> {
+        val response = api.getProductsByIndices(productIds.joinToString(","))
         if (response == null || response.products.isEmpty()) {
             throw ResponseEmptyException("Products list is empty")
         } else {

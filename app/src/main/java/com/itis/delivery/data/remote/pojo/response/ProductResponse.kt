@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.itis.delivery.base.Constants
 
 class ProductResponse(
-    val id: Long?,
+    val id: Long? = 0L,
     @SerializedName("product_name_en")
     val name: String?,
     @SerializedName("brands")
@@ -50,3 +50,5 @@ class NutrimentsData(
 class ProductListResponse(
     val products: List<ProductResponse>
 )
+
+class ShortProductRespon

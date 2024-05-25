@@ -40,7 +40,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             if (
                 destination.id == R.id.signInFragment
                 || destination.id == R.id.signUpFragment
-                || destination.id == R.id.productPageFragment) {
+                || destination.id == R.id.productPageFragment
+                || destination.id == R.id.resultSearchFragment
+                || destination.id == R.id.orderFragment
+                ) {
 
                 viewBinding.bnvMain.visibility = View.GONE
             } else {

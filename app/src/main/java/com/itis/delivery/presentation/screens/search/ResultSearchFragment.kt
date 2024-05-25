@@ -16,6 +16,7 @@ import com.itis.delivery.base.Keys.PRICE_END
 import com.itis.delivery.base.Keys.PRICE_START
 import com.itis.delivery.base.Keys.RATE
 import com.itis.delivery.base.Keys.SEARCH_TERM
+import com.itis.delivery.data.exceptions.ResponseEmptyException
 import com.itis.delivery.databinding.FragmentResultSearchBinding
 import com.itis.delivery.presentation.adapter.ProductAdapter
 import com.itis.delivery.presentation.base.BaseFragment
@@ -44,6 +45,8 @@ class ResultSearchFragment : BaseFragment(R.layout.fragment_result_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observe()
+
         categoryTag = arguments?.getString(CATEGORY_TAG)
         searchTerm = arguments?.getString(SEARCH_TERM)
         rate = arguments?.getInt(RATE)
@@ -58,9 +61,6 @@ class ResultSearchFragment : BaseFragment(R.layout.fragment_result_search) {
                 StaggeredGridLayoutManager.VERTICAL
             )
 
-            observe()
-            getProductList()
-
             btnReturn.setOnClickListener {
                 findNavController().popBackStack()
             }
@@ -69,7 +69,7 @@ class ResultSearchFragment : BaseFragment(R.layout.fragment_result_search) {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if (!recyclerView.canScrollVertically(1)) {
-                        getProductList()
+                        if (adapter != null) getProductList()
                     }
                 }
             })
@@ -79,8 +79,8 @@ class ResultSearchFragment : BaseFragment(R.layout.fragment_result_search) {
     override fun onPause() {
         super.onPause()
 
-        changeLoadingVisibility(root = viewBinding.root,  isVisible = false)
-        changeErrorVisibility(
+        setLoadingVisibility(root = viewBinding.root,  isVisible = false)
+        setErrorVisibility(
             root = viewBinding.root,
             isVisible = false,
             btnOnClickListener = {}
@@ -89,7 +89,8 @@ class ResultSearchFragment : BaseFragment(R.layout.fragment_result_search) {
 
     override fun onResume() {
         super.onResume()
-        viewModel.refresh()
+
+        getProductList()
     }
 
     private fun onProductClicked(product: ProductUiModel) {
@@ -138,20 +139,27 @@ class ResultSearchFragment : BaseFragment(R.layout.fragment_result_search) {
                 }
             }
             isLoading.observe {
-                changeErrorVisibility(
+                setErrorVisibility(
                     root = viewBinding.root,
                     isVisible = false,
                     btnOnClickListener = {}
                 )
-                changeLoadingVisibility(root = viewBinding.root, isVisible = it)
+                setLoadingVisibility(root = viewBinding.root, isVisible = it)
             }
             lifecycleScope.launch {
                 errorsChannel.consumeEach {
-                    changeErrorVisibility(
-                        root = viewBinding.root,
-                        isVisible = true,
-                        btnOnClickListener = { viewModel.refresh() }
-                    )
+                    if (it is ResponseEmptyException) {
+                        viewBinding.mtvEmptyResult.visibility = View.VISIBLE
+                        viewBinding.rvResult.visibility = View.GONE
+                    } else {
+                        setErrorVisibility(
+                            root = viewBinding.root,
+                            isVisible = true,
+                            btnOnClickListener = {
+                                viewModel.refresh()
+                            }
+                        )
+                    }
                 }
             }
         }

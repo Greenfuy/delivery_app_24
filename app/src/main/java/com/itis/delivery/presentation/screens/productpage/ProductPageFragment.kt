@@ -10,6 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.itis.delivery.R
+import com.itis.delivery.base.Keys
 import com.itis.delivery.base.Keys.PRODUCT_ID
 import com.itis.delivery.data.exceptions.UserNotAuthorizedException
 import com.itis.delivery.databinding.FragmentProductPageBinding
@@ -36,8 +37,13 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
         )
     }
 
+    private var productId: Long = 0L
+    private var count: Long = 0L
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        productId = requireArguments().getLong(PRODUCT_ID)
 
         viewBinding.run {
             swipeRefresh.visibility = View.GONE
@@ -49,17 +55,24 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
     override fun onPause() {
         super.onPause()
 
-        changeLoadingVisibility(root = viewBinding.swipeRefresh,  isVisible = false)
-        changeErrorVisibility(
+        setLoadingVisibility(root = viewBinding.swipeRefresh,  isVisible = false)
+        setErrorVisibility(
             root = viewBinding.swipeRefresh,
             isVisible = false,
             btnOnClickListener = {}
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.refresh()
+    }
+
     private fun inCartCountObserve() {
         viewModel.inCartCount.observe {
             Log.d("ProductPageFragment", "inCart: $it")
+            count = it
             viewBinding.mtvInCartCount.text = it.toString()
             if (it == 0L) {
                 viewBinding.btnMinus.isEnabled = false
@@ -88,7 +101,15 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
     private fun initListeners() {
         with(viewBinding) {
             btnBuyNow.setOnClickListener {
-                // TODO: navigate to order
+                if (count == 0L) viewModel.addToCart()
+
+                findNavController().safeNavigate(
+                    R.id.productPageFragment,
+                    R.id.action_productPageFragment_to_orderFragment,
+                    Bundle().apply {
+                        putLongArray(Keys.PRODUCTS, longArrayOf(productId))
+                    }
+                )
             }
 
             btnAddToCart.setOnClickListener {
@@ -149,17 +170,17 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
                 }
             }
             isLoading.observe {
-                changeErrorVisibility(
+                setErrorVisibility(
                     root = viewBinding.swipeRefresh,
                     isVisible = false,
                     btnOnClickListener = {}
                 )
-                changeLoadingVisibility(root = viewBinding.swipeRefresh, isVisible = it)
+                setLoadingVisibility(root = viewBinding.swipeRefresh, isVisible = it)
             }
             lifecycleScope.launch {
                 errorsChannel.consumeEach { error ->
                     if (error is UserNotAuthorizedException) showSignInSnackBar()
-                    else changeErrorVisibility(
+                    else setErrorVisibility(
                             root = viewBinding.swipeRefresh,
                             isVisible = true,
                             btnOnClickListener = { viewModel.refresh() }
