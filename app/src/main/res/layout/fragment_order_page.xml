@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.screens.orderpage.OrderPageFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_title_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/prompt_order_date_example"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="16dp"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_title_order_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_number"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_order_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_order_number_example"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="32dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_title_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancelled"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="32dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_title_last_changes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_changes"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_last_changes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_last_changes_example"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="32dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_title_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_address_example"
+                    android:layout_marginBottom="12dp"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="32dp"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_title_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/products"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="12dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/btn_repeat_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prompt_order_repeat"
+            android:textSize="20sp"
+            android:padding="12dp"
+            android:textColor="?attr/colorPrimary"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/btn_cancel_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prompt_order_cancel"
+            android:textSize="20sp"
+            android:textColor="?attr/colorError"
+            android:padding="12dp"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

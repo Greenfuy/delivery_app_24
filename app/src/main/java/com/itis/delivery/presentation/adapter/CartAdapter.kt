@@ -11,8 +11,6 @@ import com.itis.delivery.presentation.model.CartProductModel
 class CartAdapter(
     private val onItemCartProductClick: (CartProductModel) -> Unit,
     private val onChosenCheck: (Long, Boolean) -> Unit,
-    private val onIncreaseCountClick: (CartProductModel) -> Unit,
-    private val onDecreaseCountClick: (CartProductModel) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val cartProductList: MutableList<CartProductModel> = mutableListOf()
@@ -26,8 +24,6 @@ class CartAdapter(
             ),
             onItemCartProductClick,
             onChosenCheck,
-            onIncreaseCountClick,
-            onDecreaseCountClick
         )
 
     override fun getItemCount(): Int = cartProductList.size

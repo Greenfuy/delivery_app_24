@@ -6,30 +6,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.screens.order.OrderFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/mtv_title_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prompt_address"
+            android:text="@string/address"
             android:textSize="28sp"
             android:textStyle="bold"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="12dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginVertical="12dp"/>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/mtv_title_address"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="12dp">
 
@@ -53,7 +48,7 @@
                     android:id="@+id/btn_change_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/prompt_change_address"
+                    android:text="@string/change_address"
                     android:textSize="16sp"
                     android:paddingHorizontal="24dp"
                     android:layout_margin="8dp"
@@ -74,14 +69,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginVertical="8dp"
-                    app:helperText="@string/prompt_apartment">
+                    app:helperText="@string/apartment">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_apartment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:paddingVertical="12dp"
-                        android:hint="@string/prompt_apartment"/>
+                        android:hint="@string/apartment"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -90,14 +85,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginVertical="8dp"
-                    app:helperText="@string/prompt_street">
+                    app:helperText="@string/street">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_street"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:paddingVertical="12dp"
-                        android:hint="@string/prompt_street"/>
+                        android:hint="@string/street"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -106,14 +101,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginVertical="8dp"
-                    app:helperText="@string/prompt_city">
+                    app:helperText="@string/city">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_city"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:paddingVertical="12dp"
-                        android:hint="@string/prompt_city"/>
+                        android:hint="@string/city"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -122,14 +117,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginVertical="8dp"
-                    app:helperText="@string/prompt_region">
+                    app:helperText="@string/region">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_region"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:paddingVertical="12dp"
-                        android:hint="@string/prompt_region"/>
+                        android:hint="@string/region"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
@@ -151,32 +146,23 @@
             android:id="@+id/mtv_title_products"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prompt_products"
+            android:text="@string/products"
             android:textSize="28sp"
             android:textStyle="bold"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="12dp"
-            app:layout_constraintTop_toBottomOf="@id/card_address"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginVertical="12dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_products"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:layout_constraintTop_toBottomOf="@id/mtv_title_products"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_margin="12dp"/>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/rv_products"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_margin="12dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -227,7 +213,7 @@
                     android:id="@+id/btn_order"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/prompt_make_an_order"
+                    android:text="@string/make_an_order"
                     android:textSize="16sp"
                     android:enabled="false"
                     android:layout_margin="12dp"
@@ -240,6 +226,6 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

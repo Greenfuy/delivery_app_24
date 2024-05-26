@@ -11,7 +11,6 @@ class UserUiModelMapper @Inject constructor() {
         with(input) {
             Log.d("UserUiModelMapper", "mapDomainToUiModel: $uid, $username, $email")
             return UserUiModel(
-                uid = uid,
                 username = username,
                 email = email
             )

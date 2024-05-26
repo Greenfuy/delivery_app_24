@@ -6,7 +6,7 @@ import com.itis.delivery.base.Keys.COUNT
 import com.itis.delivery.base.Keys.PRODUCT_ID
 import com.itis.delivery.base.Keys.USER_ID
 import com.itis.delivery.data.exceptions.UserNotAuthorizedException
-import com.itis.delivery.domain.model.CartModel
+import com.itis.delivery.domain.model.CartDomainModel
 import com.itis.delivery.domain.repository.CartRepository
 import com.itis.delivery.domain.repository.UserRepository
 import kotlinx.coroutines.tasks.await
@@ -49,7 +49,7 @@ class CartRepositoryImpl @Inject constructor(
             val id = UUID.randomUUID().toString()
             db.collection(Keys.CARTS_COLLECTION_KEY)
                 .document(id)
-                .set(CartModel(id, productId, userId, 1))
+                .set(CartDomainModel(id, productId, userId, 1))
                 .await()
         }
         return true
@@ -88,7 +88,7 @@ class CartRepositoryImpl @Inject constructor(
         return documents.isNotEmpty()
     }
 
-    override suspend fun getCartList(): List<CartModel> {
+    override suspend fun getCartList(): List<CartDomainModel> {
         val userId = userRepository.getCurrentUserId()
         if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
 
@@ -97,14 +97,14 @@ class CartRepositoryImpl @Inject constructor(
             .get()
             .await()
             .documents
-        val result = mutableListOf<CartModel>()
+        val result = mutableListOf<CartDomainModel>()
         documents.forEach {
-            it.toObject(CartModel::class.java)?.let { it1 -> result.add(it1) }
+            it.toObject(CartDomainModel::class.java)?.let { it1 -> result.add(it1) }
         }
         return result
     }
 
-    override suspend fun getCartListByProductIndices(vararg productIds: Long): List<CartModel> {
+    override suspend fun getCartListByProductIndices(vararg productIds: Long): List<CartDomainModel> {
         val userId = userRepository.getCurrentUserId()
         if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
 
@@ -114,9 +114,9 @@ class CartRepositoryImpl @Inject constructor(
             .get()
             .await()
             .documents
-        val result = mutableListOf<CartModel>()
+        val result = mutableListOf<CartDomainModel>()
         documents.forEach {
-            it.toObject(CartModel::class.java)?.let { it1 -> result.add(it1) }
+            it.toObject(CartDomainModel::class.java)?.let { it1 -> result.add(it1) }
         }
         return result
     }

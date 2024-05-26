@@ -1,6 +1,5 @@
-package com.itis.delivery.domain.usecase.product
+package com.itis.delivery.domain.usecase.cart
 
-import com.itis.delivery.data.exceptions.UserNotAuthorizedException
 import com.itis.delivery.domain.mapper.CartProductMapper
 import com.itis.delivery.domain.repository.CartRepository
 import com.itis.delivery.domain.repository.ProductRepository

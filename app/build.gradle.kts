@@ -89,4 +89,7 @@ dependencies {
 
     // GLide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    //QR
+    implementation("io.github.g0dkar:qrcode-kotlin:4.1.1")
 }

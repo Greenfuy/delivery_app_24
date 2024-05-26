@@ -1,6 +1,6 @@
 package com.itis.delivery.domain.model
 
-class CartModel(
+class CartDomainModel(
     val id: String = "",
     val productId: Long = 0,
     val userId: String = "",

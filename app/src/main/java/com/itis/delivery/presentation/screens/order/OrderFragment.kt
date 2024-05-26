@@ -90,7 +90,7 @@ class OrderFragment : BaseFragment(R.layout.fragment_order) {
 
             btnOrder.setOnClickListener {
                 AlertDialog.Builder(requireContext())
-                    .setMessage("Are you sure you want to order?")
+                    .setMessage(getString(R.string.prompt_order_confirm))
                     .setPositiveButton("Yes") { _, _ ->
                         viewModel.createOrder(mtvAddress.text.toString())
                     }

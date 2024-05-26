@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.itis.delivery.R
 import com.itis.delivery.base.Keys
 import com.itis.delivery.base.Keys.PRODUCT_ID
+import com.itis.delivery.data.exceptions.UserNotAuthorizedException
 import com.itis.delivery.databinding.FragmentCartBinding
 import com.itis.delivery.presentation.adapter.CartAdapter
 import com.itis.delivery.presentation.base.BaseFragment
@@ -124,14 +125,6 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         }
     }
 
-//    private fun onIncreaseCountClicked(productId: Long) {
-//        viewModel.addToCart(productId)
-//    }
-//
-//    private fun onDecreaseCountClicked(productId: Long) {
-//        viewModel.removeFromCart(productId)
-//    }
-
     private fun observe() {
         with(viewModel) {
             cartProductList.observe {
@@ -146,8 +139,6 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
                         adapter = CartAdapter(
                             onItemCartProductClick = ::onItemCartProductClicked,
                             onChosenCheck = ::onChosenChecked,
-                            onIncreaseCountClick = { /*onIncreaseCountClicked(it)*/ },
-                            onDecreaseCountClick = { /*onDecreaseCountClicked(it)*/ }
                         ).apply { setList(cartProducts) }
                     }
 
@@ -175,11 +166,15 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             }
             lifecycleScope.launch {
                 errorsChannel.consumeEach {
-                    setErrorVisibility(
-                        root = viewBinding.root,
-                        isVisible = true,
-                        btnOnClickListener = { viewModel.refresh() }
-                    )
+                    if (it is UserNotAuthorizedException) {
+                        showSignInSnackBar()
+                    } else {
+                        setErrorVisibility(
+                            root = viewBinding.root,
+                            isVisible = true,
+                            btnOnClickListener = { viewModel.refresh() }
+                        )
+                    }
                 }
             }
         }
