@@ -3,7 +3,7 @@ package com.itis.delivery.presentation.screens.cart
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.itis.delivery.domain.repository.CartRepository
-import com.itis.delivery.domain.usecase.product.GetCartProductListUseCase
+import com.itis.delivery.domain.usecase.cart.GetCartProductListUseCase
 import com.itis.delivery.presentation.base.BaseViewModel
 import com.itis.delivery.presentation.model.CartProductModel
 import com.itis.delivery.utils.ExceptionHandlerDelegate
@@ -72,40 +72,4 @@ class CartViewModel @Inject constructor(
     fun refresh() {
         getCartProductList()
     }
-
-//    fun addToCart(productId: Long) : Boolean {
-//        if (userId == null) return false
-//        viewModelScope.launch {
-//            runSuspendCatching(exceptionHandlerDelegate = exceptionHandlerDelegate) {
-//                cartRepository.addToCart(userId!!, productId)
-//            }.onSuccess {
-//                getInCartCount(productId)
-//                Log.d("ProductPageViewModel", "Added to cart")
-//            }.onFailure {
-//                exceptionHandlerDelegate.handleException(it).also { throwable ->
-//                    errorsChannel.send(throwable)
-//                }
-//                Log.e("ProductPageViewModel", "Error: $it", it)
-//            }
-//        }
-//        return true
-//    }
-//
-//    fun removeFromCart(productId: Long) : Boolean {
-//        if (userId == null) return false
-//        viewModelScope.launch {
-//            runSuspendCatching(exceptionHandlerDelegate = exceptionHandlerDelegate) {
-//                cartRepository.removeFromCart(userId!!, productId)
-//            }.onSuccess {
-//                return@launch true
-//                Log.d("ProductPageViewModel", "Removed from cart")
-//            }.onFailure {
-//                exceptionHandlerDelegate.handleException(it).also { throwable ->
-//                    errorsChannel.send(throwable)
-//                }
-//                Log.e("ProductPageViewModel", "Error: $it", it)
-//            }
-//        }
-//        return true
-//    }
 }

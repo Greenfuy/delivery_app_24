@@ -1,6 +1,6 @@
 package com.itis.delivery.domain.repository
 
-import com.itis.delivery.domain.model.CartModel
+import com.itis.delivery.domain.model.CartDomainModel
 
 interface CartRepository {
 
@@ -12,9 +12,9 @@ interface CartRepository {
 
     suspend fun isInCart(productId: Long) : Boolean
 
-    suspend fun getCartList() : List<CartModel>
+    suspend fun getCartList() : List<CartDomainModel>
 
-    suspend fun getCartListByProductIndices(vararg productIds: Long) : List<CartModel>
+    suspend fun getCartListByProductIndices(vararg productIds: Long) : List<CartDomainModel>
 
     suspend fun removeAll(vararg productIds: Long) : Boolean
 }

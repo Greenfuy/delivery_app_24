@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="LightThemeRadioButtonStyle" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/light_theme_btn_radio</item>
+    </style>
+
+    <style name="DarkThemeRadioButtonStyle" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/dark_theme_btn_radio</item>
+    </style>
+
+    <style name="DayNightThemeRadioButtonStyle" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/daynight_theme_btn_radio</item>
+    </style>
+    
+</resources>

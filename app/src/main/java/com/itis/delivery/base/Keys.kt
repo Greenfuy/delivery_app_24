@@ -10,6 +10,7 @@ object Keys {
     const val RATES_COLLECTION_KEY = "rates"
     const val USERS_COLLECTION_KEY = "users"
     const val ORDERS_COLLECTION_KEY = "orders"
+    const val ORDER_PRODUCTS_COLLECTION_KEY = "order_products"
 
     const val USER_ID = "userId"
     const val PRODUCT_ID = "productId"

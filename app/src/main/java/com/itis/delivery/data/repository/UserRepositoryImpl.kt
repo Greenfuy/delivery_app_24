@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.itis.delivery.base.Keys
+import com.itis.delivery.data.exceptions.UserNotAuthorizedException
 import com.itis.delivery.data.mapper.UserDomainModelMapper
 import com.itis.delivery.domain.model.UserDomainModel
 import com.itis.delivery.domain.repository.UserRepository
@@ -46,11 +47,29 @@ class UserRepositoryImpl @Inject constructor(
         db.collection(Keys.USERS_COLLECTION_KEY).document(user.uid).set(user).await()
     }
 
-    override suspend fun getUserById(userId: String): UserDomainModel = mapper.firebaseDocToUserModel(
-        db.collection(Keys.USERS_COLLECTION_KEY).document(userId).get().await()
-    )
+    override suspend fun getUserById(userId: String): UserDomainModel =
+        mapper.firebaseDocToUserModel(
+            db.collection(Keys.USERS_COLLECTION_KEY).document(userId).get().await()
+        )
 
     override suspend fun getCurrentUserId(): String? = auth.currentUser?.uid
+
+    override suspend fun getCurrentUserCredentials(): String {
+        val userId = getCurrentUserId()
+        if (userId.isNullOrEmpty()) throw UserNotAuthorizedException("User not authorized")
+        val documents = db.collection(Keys.USERS_COLLECTION_KEY).document(userId).get().await()
+
+        return documents.get("username") as String
+    }
+
+    override suspend fun updateUserCredentials(username: String): Boolean {
+        val userId = getCurrentUserId() ?: throw UserNotAuthorizedException("User not authorized")
+
+        db.collection(Keys.USERS_COLLECTION_KEY).document(userId).update(
+            "username", username
+        ).await()
+        return true
+    }
 
     override suspend fun signOut() {
         auth.signOut()

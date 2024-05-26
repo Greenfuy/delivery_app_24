@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.itis.delivery.R
 import com.itis.delivery.base.Keys
 import com.itis.delivery.base.Keys.PRODUCT_ID
@@ -84,18 +83,6 @@ class ProductPageFragment : BaseFragment(R.layout.fragment_product_page) {
                 viewBinding.btnToCart.visibility = View.VISIBLE
             }
         }
-    }
-
-    private fun showSignInSnackBar() {
-        Snackbar.make(requireView(),
-            getString(R.string.prompt_must_be_authorized), Snackbar.LENGTH_SHORT)
-            .setAction(getString(R.string.action_sign_in)) {
-                findNavController().safeNavigate(
-                    R.id.productPageFragment,
-                    R.id.action_productPageFragment_to_signInFragment
-                )
-            }
-            .show()
     }
 
     private fun initListeners() {

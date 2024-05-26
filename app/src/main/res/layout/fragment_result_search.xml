@@ -47,7 +47,7 @@
             android:id="@+id/mtv_empty_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/prompt_no_results"
+            android:text="@string/no_results"
             android:textSize="28sp"
             android:textStyle="bold"
             android:layout_gravity="center"

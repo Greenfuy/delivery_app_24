@@ -3,6 +3,7 @@ package com.itis.delivery.presentation.activitymain
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -21,7 +22,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     private val viewBinding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
 
     private val prefs: SharedPreferences by lazy {
-        getSharedPreferences("ru.itis.delivery", MODE_PRIVATE)
+        getSharedPreferences(DELIVERY_PREFS, MODE_PRIVATE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +51,18 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
                 viewBinding.bnvMain.visibility = View.VISIBLE
             }
         }
+
+        when (prefs.getInt(THEME_MODE, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)) {
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+            AppCompatDelegate.MODE_NIGHT_NO -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            AppCompatDelegate.MODE_NIGHT_YES -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }
     }
 
     override fun onResume() {
@@ -65,6 +78,8 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     companion object {
+        const val DELIVERY_PREFS = "ru.itis.delivery"
         private const val FIRST_RUN = "first_run"
+        const val THEME_MODE = "theme_mode"
     }
 }

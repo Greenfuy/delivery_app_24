@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.itis.delivery.base.Keys
 import com.itis.delivery.domain.repository.CartRepository
 import com.itis.delivery.domain.repository.OrderRepository
-import com.itis.delivery.domain.usecase.product.GetCartProductListUseCase
+import com.itis.delivery.domain.usecase.cart.GetCartProductListUseCase
 import com.itis.delivery.presentation.base.BaseViewModel
 import com.itis.delivery.presentation.model.CartProductModel
 import com.itis.delivery.utils.ExceptionHandlerDelegate
@@ -28,6 +28,7 @@ class OrderViewModel @AssistedInject constructor(
 ) : BaseViewModel() {
 
     private val productCounts: MutableList<Long> = mutableListOf()
+    private val productPrices: MutableList<Long> = mutableListOf()
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -44,7 +45,7 @@ class OrderViewModel @AssistedInject constructor(
             }.onSuccess {
                 _carOrderList.value = it
                 _isLoading.value = false
-                setProductCounts(it)
+                setProductCountsAndPrices(it)
                 Log.d("OrderViewModel", "cartOrderList.size(): ${it.size}")
             }.onFailure {
                 _isLoading.value = false
@@ -61,13 +62,16 @@ class OrderViewModel @AssistedInject constructor(
         viewModelScope.launch {
             runSuspendCatching(exceptionHandlerDelegate) {
                 orderRepository.addOrder(
-                    products = products.zip(productCounts).toMap(),
+                    products = products,
+                    counts = productCounts.toLongArray(),
+                    prices = productPrices.toLongArray(),
                     address = address
                 )
             }.onSuccess {
                 _success.value = true
                 _isLoading.value = false
                 cartRepository.removeAll(productIds = products)
+                Log.d("OrderViewModel", "order created")
             }.onFailure {
                 _success.value = false
                 _isLoading.value = false
@@ -79,8 +83,9 @@ class OrderViewModel @AssistedInject constructor(
         }
     }
 
-    private fun setProductCounts(cartProducts: List<CartProductModel>) {
+    private fun setProductCountsAndPrices(cartProducts: List<CartProductModel>) {
         productCounts.addAll(cartProducts.map { it.count })
+        productPrices.addAll(cartProducts.map { it.price.toLong() })
     }
 
     @AssistedFactory

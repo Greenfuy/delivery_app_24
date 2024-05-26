@@ -1,7 +1,7 @@
 package com.itis.delivery.domain.mapper
 
 import android.util.Log
-import com.itis.delivery.domain.model.CartModel
+import com.itis.delivery.domain.model.CartDomainModel
 import com.itis.delivery.domain.model.ProductDomainModel
 import com.itis.delivery.presentation.model.CartProductModel
 import javax.inject.Inject
@@ -10,7 +10,7 @@ class CartProductMapper @Inject constructor() {
 
     fun mapToCartProductModelList(
         productList: List<ProductDomainModel>,
-        cartList: List<CartModel>
+        cartList: List<CartDomainModel>
     ): MutableList<CartProductModel> {
         val cartProductList = mutableListOf<CartProductModel>()
 
