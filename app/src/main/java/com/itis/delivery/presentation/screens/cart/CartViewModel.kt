@@ -21,7 +21,7 @@ class CartViewModel @Inject constructor(
     private val exceptionHandlerDelegate: ExceptionHandlerDelegate,
 ) : BaseViewModel() {
 
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
     private val _cartProductList = MutableStateFlow<List<CartProductModel>>(emptyList())
     val cartProductList = _cartProductList.asStateFlow()

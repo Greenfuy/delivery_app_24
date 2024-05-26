@@ -21,7 +21,7 @@ class OrderHistoryViewModel @Inject constructor(
 
     private val _orderList = MutableStateFlow<List<OrderUiModel>>(emptyList())
     val orderList = _orderList.asStateFlow()
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
 
     fun getOrderList() {

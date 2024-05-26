@@ -123,4 +123,5 @@
     <string name="propmt_order_title">The order dated at %1$s</string>
     <string name="prompt_successful_order_cancel">Order cancelled successfully</string>
     <string name="product_rated">Product rated</string>
+    <string name="prompt_successful_sign_out">Successfully signed out</string>
 </resources>

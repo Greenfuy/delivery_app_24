@@ -23,7 +23,7 @@ class SettingsViewModel @Inject constructor(
     private val exceptionHandlerDelegate: ExceptionHandlerDelegate
 ) : BaseViewModel() {
 
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
     private val _userCredentials = MutableStateFlow<String?>(null)
     val userCredentials = _userCredentials.asStateFlow()

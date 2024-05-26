@@ -5,10 +5,7 @@ class ProductDomainModel(
     val name: String,
     val brands: String,
     val quantity: String,
-    val categoriesTags: List<String>,
-    val labels: String,
     val imageUrl: String,
-    val nutriments: NutrimentsDataDomainModel,
     val price: Int
 )
 

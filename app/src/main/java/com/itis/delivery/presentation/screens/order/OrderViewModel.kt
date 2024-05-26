@@ -30,7 +30,7 @@ class OrderViewModel @AssistedInject constructor(
     private val productCounts: MutableList<Long> = mutableListOf()
     private val productPrices: MutableList<Long> = mutableListOf()
 
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
     private val _carOrderList = MutableStateFlow<List<CartProductModel>>(emptyList())
     val cartOrderList = _carOrderList.asStateFlow()

@@ -25,7 +25,7 @@ class ResultSearchViewModel @Inject constructor(
 
     private val _productList = MutableStateFlow<List<ProductUiModel>>(emptyList())
     val productList = _productList.asStateFlow()
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
 
     private var page = 1

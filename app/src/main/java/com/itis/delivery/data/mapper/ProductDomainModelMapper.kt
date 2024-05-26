@@ -4,7 +4,6 @@ import android.util.Log
 import com.itis.delivery.data.remote.pojo.response.ProductListResponse
 import com.itis.delivery.data.remote.pojo.response.ProductResponse
 import com.itis.delivery.data.remote.pojo.response.isNotFull
-import com.itis.delivery.domain.model.NutrimentsDataDomainModel
 import com.itis.delivery.domain.model.ProductDomainModel
 import javax.inject.Inject
 import kotlin.random.Random
@@ -19,18 +18,7 @@ class ProductDomainModelMapper @Inject constructor() {
                     name = name!!,
                     brands = brands!!,
                     quantity = quantity!!,
-                    categoriesTags = categoriesTags!!,
-                    labels = labels!!,
                     imageUrl = imageUrl!!,
-                    nutriments = NutrimentsDataDomainModel(
-                        carbohydrates = nutriments.carbohydrates,
-                        energyKcal = nutriments.energyKcal,
-                        fat = nutriments.fat,
-                        proteins = nutriments.proteins,
-                        salt = nutriments.salt,
-                        saturatedFat = nutriments.saturatedFat,
-                        sugars = nutriments.sugars
-                    ),
                     price = Random.nextInt(20, 300)
                 )
             }

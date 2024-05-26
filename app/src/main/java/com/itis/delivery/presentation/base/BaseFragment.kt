@@ -4,6 +4,7 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.itis.delivery.R
 import com.itis.delivery.base.AuthErrors
@@ -16,11 +17,15 @@ import kotlinx.coroutines.flow.Flow
 abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
 
     protected fun showSnackBar(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
-        Snackbar.make(
-            requireView(),
-            message,
-            duration
-        ).show()
+        val bottomMenu = requireActivity().findViewById<BottomNavigationView>(R.id.bnv_main)
+        Snackbar
+            .make(
+                requireView(),
+                message,
+                duration
+            )
+            .setAnchorView(bottomMenu)
+            .show()
     }
 
     inline fun <T> Flow<T>.observe(crossinline block: (T) -> Unit): Job {
@@ -58,7 +63,9 @@ abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
     }
 
     protected fun showSignInSnackBar() {
-        Snackbar.make(requireView(),
+        val bottomMenu = requireActivity().findViewById<BottomNavigationView>(R.id.bnv_main)
+        Snackbar
+            .make(requireView(),
             getString(R.string.prompt_must_be_authorized), Snackbar.LENGTH_SHORT)
             .setAction(getString(R.string.action_sign_in)) {
                 findNavController().safeNavigate(
@@ -66,6 +73,7 @@ abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
                     R.id.action_productPageFragment_to_signInFragment
                 )
             }
+            .setAnchorView(bottomMenu)
             .show()
     }
 }

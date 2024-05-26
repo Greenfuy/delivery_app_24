@@ -24,9 +24,8 @@ class MainViewModel @Inject constructor(
 
     private val _productList = MutableStateFlow<List<ProductUiModel>>(emptyList())
     val productList = _productList.asStateFlow()
-    // TODO: create a more optimal way to receive categories
     var categoryList = emptyList<CategoryUiModel>()
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
 
     private var page = 1

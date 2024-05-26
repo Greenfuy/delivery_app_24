@@ -34,7 +34,7 @@ class ProductPageViewModel @AssistedInject constructor(
     val product = _product.asStateFlow()
     private val _rate = MutableStateFlow(-1.0)
     val rate = _rate.asStateFlow()
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
 
     private var userId: String? = null

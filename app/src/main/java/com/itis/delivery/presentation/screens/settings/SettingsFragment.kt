@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 
+
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
@@ -29,10 +30,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         super.onViewCreated(view, savedInstanceState)
 
         observe()
-
-        viewBinding.run {
-
-        }
     }
 
     override fun onPause() {
@@ -73,12 +70,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                         R.id.settingsFragment,
                         R.id.action_settingsFragment_to_signInFragment
                     )
-                }
-            }
-
-            cardPartnerCard.setOnClickListener {
-                if (isUserAuthorized) {
-
                 }
             }
             cardOrders.setOnClickListener {
@@ -140,6 +131,15 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                         viewModel.getQrCode()
                     }
                 )
+            }
+            signOut.observe {
+                if (it) {
+                    showSnackBar(getString(R.string.prompt_successful_sign_out))
+                    findNavController().safeNavigate(
+                        R.id.settingsFragment,
+                        R.id.action_settingsFragment_to_signInFragment
+                    )
+                }
             }
             lifecycleScope.launch {
                 errorsChannel.consumeEach {
