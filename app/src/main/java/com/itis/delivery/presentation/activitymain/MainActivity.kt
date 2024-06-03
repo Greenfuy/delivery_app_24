@@ -30,7 +30,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         setContentView(viewBinding.root)
 
         val controller = (supportFragmentManager
-            .findFragmentById(R.id.main_activity_container) as NavHostFragment)
+            .findFragmentById(fragmentContainerId) as NavHostFragment)
             .navController
 
         findViewById<BottomNavigationView>(R.id.bnv_main).apply {
@@ -44,6 +44,8 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
                 || destination.id == R.id.productPageFragment
                 || destination.id == R.id.resultSearchFragment
                 || destination.id == R.id.orderFragment
+                || destination.id == R.id.orderPageFragment
+                || destination.id == R.id.profileFragment
             ) {
 
                 viewBinding.bnvMain.visibility = View.GONE
@@ -73,7 +75,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         if (prefs.getBoolean(FIRST_RUN, true)) {
             prefs.edit().putBoolean(FIRST_RUN, false).apply()
         } else {
-            findNavController(R.id.container).safeNavigate(
+            findNavController(fragmentContainerId).safeNavigate(
                 R.id.signInFragment,
                 R.id.action_signInFragment_to_mainFragment
             )

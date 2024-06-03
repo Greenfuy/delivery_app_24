@@ -48,20 +48,6 @@ class OrderPageFragment : BaseFragment(R.layout.fragment_order_page) {
             rvProducts.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-            btnRepeatOrder.setOnClickListener {
-                findNavController().safeNavigate(
-                    R.id.orderPageFragment,
-                    R.id.action_orderPageFragment_to_orderFragment,
-                    Bundle()
-                        .apply {
-                            putLongArray(
-                                Keys.PRODUCTS,
-                                orderModel?.products?.map { p -> p.productId }?.toLongArray()
-                            )
-                        }
-                )
-            }
-
             btnCancelOrder.setOnClickListener {
                 viewModel.cancelOrder()
             }

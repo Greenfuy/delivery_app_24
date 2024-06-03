@@ -127,14 +127,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"/>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/btn_repeat_order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/prompt_order_repeat"
-            android:textSize="20sp"
-            android:padding="12dp"
-            android:textColor="?attr/colorPrimary"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/btn_cancel_order"
