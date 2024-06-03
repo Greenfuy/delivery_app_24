@@ -90,6 +90,8 @@ class ResultSearchFragment : BaseFragment(R.layout.fragment_result_search) {
     override fun onResume() {
         super.onResume()
 
+        viewModel.setPage(1)
+        adapter = null
         getProductList()
     }
 

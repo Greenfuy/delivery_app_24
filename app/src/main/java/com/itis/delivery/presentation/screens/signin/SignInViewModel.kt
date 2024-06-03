@@ -3,9 +3,10 @@ package com.itis.delivery.presentation.screens.signin
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.itis.delivery.domain.usecase.auth.SignInUseCase
-import com.itis.delivery.presentation.base.BaseViewModel
 import com.itis.delivery.base.AuthErrors
+import com.itis.delivery.domain.usecase.auth.SignInUseCase
+import com.itis.delivery.domain.usecase.validation.EmailValidateUseCase
+import com.itis.delivery.presentation.base.BaseViewModel
 import com.itis.delivery.utils.ExceptionHandlerDelegate
 import com.itis.delivery.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
-    private val exceptionHandlerDelegate: ExceptionHandlerDelegate
+    private val exceptionHandlerDelegate: ExceptionHandlerDelegate,
+    private val emailValidateUseCase: EmailValidateUseCase
 ) : BaseViewModel() {
 
     private val _signingIn = MutableStateFlow(false)
@@ -30,7 +32,11 @@ class SignInViewModel @Inject constructor(
 
     fun onSignUpClick(email: String, password: String) {
         if (!_signingIn.value) {
-            signIn(email, password)
+            if (!emailValidateUseCase.invoke(email) || password.isEmpty()) {
+                _error.value = AuthErrors.INVALID_CREDENTIALS
+            } else {
+                signIn(email, password)
+            }
         } else {
             Log.e("SignInViewModel", "Wait")
             _error.value = AuthErrors.WAIT
@@ -52,9 +58,11 @@ class SignInViewModel @Inject constructor(
                 }
             }.onSuccess {
                 Log.d("SignInViewModel", "Successfully signed in")
+                _error.value = null
                 _success.value = true
             }
             _signingIn.value = false
+            _error.value = null
         }
     }
 }

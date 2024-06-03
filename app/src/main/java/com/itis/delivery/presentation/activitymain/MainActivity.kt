@@ -44,7 +44,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
                 || destination.id == R.id.productPageFragment
                 || destination.id == R.id.resultSearchFragment
                 || destination.id == R.id.orderFragment
-                ) {
+            ) {
 
                 viewBinding.bnvMain.visibility = View.GONE
             } else {
@@ -56,9 +56,11 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
+
             AppCompatDelegate.MODE_NIGHT_NO -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
+
             AppCompatDelegate.MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
@@ -69,11 +71,12 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         super.onResume()
 
         if (prefs.getBoolean(FIRST_RUN, true)) {
-            findNavController(R.id.main_activity_container).safeNavigate(
-                R.id.mainFragment,
-                R.id.action_mainFragment_to_signInFragment
-            )
             prefs.edit().putBoolean(FIRST_RUN, false).apply()
+        } else {
+            findNavController(R.id.container).safeNavigate(
+                R.id.signInFragment,
+                R.id.action_signInFragment_to_mainFragment
+            )
         }
     }
 

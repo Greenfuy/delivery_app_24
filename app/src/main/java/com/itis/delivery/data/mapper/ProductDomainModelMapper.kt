@@ -36,7 +36,6 @@ class ProductDomainModelMapper @Inject constructor() {
                     list.add(product)
                 }
             }
-            if (list.size > 1 && list.size % 2 != 0) list.removeAt(list.size - 1)
             return list
         }
     }

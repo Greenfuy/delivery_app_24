@@ -117,6 +117,10 @@ class ResultSearchViewModel @Inject constructor(
         Log.d("ResultSearchViewModel", "refresh, state: $state")
     }
 
+    fun setPage(page: Int) {
+        this.page = page
+    }
+
     companion object {
         private const val STATE_SEARCH_TERM = 0
         private const val STATE_CATEGORY = 1

@@ -25,6 +25,19 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         initListeners()
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        setErrorVisibility(
+            root = viewBinding.root,
+            isVisible = false
+        )
+        setLoadingVisibility(
+            root = viewBinding.root,
+            isVisible = false
+        )
+    }
+
     private fun initListeners() {
         viewBinding.run {
             initTextListeners()
